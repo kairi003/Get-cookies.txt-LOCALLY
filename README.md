@@ -22,6 +22,8 @@ Example of extension installation directory:
 
 # Installation
 ## From Chrome WebStore
+If the review is completed, it will be published at the following URL.
+
 https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc
 
 ## From source code
