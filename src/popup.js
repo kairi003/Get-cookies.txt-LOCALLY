@@ -1,24 +1,21 @@
 /** @typedef {import('./types.d.ts').*} * */
 
+/** Promise to get URL of Active Tab */
 const getUrl = chrome.tabs.query({ active: true, currentWindow: true })
   .then(([{ url }]) => url);
 
-getUrl.then(url => {
-  const location = document.querySelector('#location');
-  location.textContent = location.href = new URL(url).href;
-});
 
 /**
+ * Convert Chrome's JSON format cookies data to a string array for Netscape format
  * @param {CookieJson[]} jsonData 
  * @returns {string[][7]}
  */
 const jsonToNetscapeMapper = (jsonData) => {
   return jsonData.map(({ domain, expirationDate, path, secure, name, value }) => {
     const includeSubDomain = !!domain?.startsWith('.');
-    const arr = [domain, includeSubDomain, path,
-      secure, (parseInt(expirationDate) ?? '').toString(), name, value];
-    return arr.map(v => (typeof v === 'boolean') ?
-      v.toString().toUpperCase() : v.toString());
+    const expiry = expirationDate?.toFixed() ?? '';
+    const arr = [domain, includeSubDomain, path, secure, expiry, name, value];
+    return arr.map(v => (typeof v === 'boolean') ? v.toString().toUpperCase() : v);
   });
 }
 
@@ -46,6 +43,7 @@ const FormatMap = {
 }
 
 /**
+ * Save text data as a file
  * @param {string} text 
  * @param {Format} format 
  */
@@ -58,6 +56,7 @@ const save = async (text, { ext, mimeType }) => {
 }
 
 /**
+ * Save text data as a file with name
  * @param {string} text 
  * @param {Format} format 
  */
@@ -78,6 +77,7 @@ const saveAs = async (text, { ext, mimeType }) => {
 }
 
 /**
+ * Copy text data to the clipboard
  * @param {string} text
  */
 const setClipboard = async (text) => {
@@ -88,6 +88,7 @@ const setClipboard = async (text) => {
 }
 
 /**
+ * Serialize and retrieve Cookies data into text data in a specific format
  * @param {Format} format 
  * @param {chrome.cookies.GetAllDetails} details 
  * @returns {string}
@@ -96,6 +97,28 @@ const getCookieText = async (format, details) => {
   const cookies = await chrome.cookies.getAll(details);
   return format.serializer(cookies);
 }
+
+
+/** Set URL in the header */
+getUrl.then(url => {
+  const location = document.querySelector('#location');
+  location.textContent = location.href = new URL(url).href;
+});
+
+/** Set Cookies data to the table */
+getUrl.then(url => chrome.cookies.getAll({ url })).then(cookies => {
+  const netscape = jsonToNetscapeMapper(cookies);
+  const tableRows = netscape.map(row => {
+    const tr = document.createElement('tr');
+    tr.replaceChildren(...row.map(v => {
+      const td = document.createElement('td');
+      td.textContent = v;
+      return td;
+    }));
+    return tr;
+  });
+  document.querySelector('table tbody').replaceChildren(...tableRows);
+});
 
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
@@ -121,16 +144,3 @@ document.querySelector('#exportAll').addEventListener('click', async () => {
   save(text, format);
 });
 
-getUrl.then(url => chrome.cookies.getAll({ url })).then(cookies => {
-  const netscape = jsonToNetscapeMapper(cookies);
-  const tableRows = netscape.map(row => {
-    const tr = document.createElement('tr');
-    tr.replaceChildren(...row.map(v => {
-      const td = document.createElement('td');
-      td.textContent = v;
-      return td;
-    }));
-    return tr;
-  });
-  document.querySelector('table tbody').replaceChildren(...tableRows);
-});
