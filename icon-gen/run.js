@@ -1,7 +1,6 @@
 const icongen = require('icon-gen');
 const fs = require('fs');
- 
-const name = 'icon';
+
 icongen('icon.svg', '../src/images', {
   favicon: {
     name: 'icon',
