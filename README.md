@@ -1,5 +1,7 @@
-# Get-cookies.txt-Locally
+# Get cookies.txt LOCALLY
 Get cookies.txt, NEVER send information outside.
+
+![ss](./ss.png)
 
 This extension exports cookies in Netscape or JSON format.
 
@@ -19,4 +21,11 @@ Example of extension installation directory:
 
 
 # Installation
-Chrome WebStore: https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc
+## From Chrome WebStore
+https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc
+
+## From source code
+1. Download and unzip this repository.
+2. Open [Extensions](chrome://extensions/)
+3. Enable "Developer mode".
+4. Click on "Load Unpacked" and open the directory `Get-cookies.txt-LOCALLY/src`.
