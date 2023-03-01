@@ -1,0 +1,79 @@
+html {
+  width: 500px;
+  box-sizing: border-box;
+  overflow-x: scroll;
+}
+
+h1 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+main {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.export-btn-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  height: 2.5rem;
+  gap: 0.2em;
+  border: none;
+  border-radius: 5px;
+}
+
+.export-btn:hover {
+  filter: brightness(0.85);
+}
+.export-btn:active {
+  filter: brightness(1.15);
+}
+
+.export-btn.large {
+  grid-column: 1 / 4;
+}
+
+.export-btn.export {
+  background-color: #485FC7;
+  color: white;
+}
+
+.export-btn.export-as {
+  background-color: #FEE08A;
+  color: black;
+}
+
+.export-btn.copy, .export-btn.export-all {
+  background-color: #3F8ECF;
+  color: white;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.netscape-table {
+  border-collapse: collapse;
+}
+
+.netscape-table th, td {
+  border: solid 1px black;
+}
+
+.netscape-table tbody tr:nth-of-type(2n+1) {
+  background-color: aliceblue;
+}

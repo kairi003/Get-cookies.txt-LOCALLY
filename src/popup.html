@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="iconfont/material-icons.css" />
+    <script src="popup.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Get cookies.txt for <a id="location"></a>
+      </h1>
+      <hr />
+    </header>
+    <main>
+      <div class="export-btn-container">
+        <button id="export" class="export-btn export">
+          Export          
+          <span class="material-symbols-outlined">download</span>
+        </button>
+        <button id="exportAs" class="export-btn export-as">
+          Export As
+          <span class="material-symbols-outlined">download</span>
+        </button>
+        <button id="copy" class="export-btn copy">
+          Copy
+          <span class="material-symbols-outlined">content_paste</span>
+        </button>
+        <button id="exportAll" class="export-btn large export-all">
+          Export All Cookies
+          <span class="material-symbols-outlined">download</span>
+        </button>
+      </div>
+  
+      <div class="format">
+        <label for="format">Export Format:</label>
+        <select id="format" name="format">
+          <option value="netscape" selected>Netscape</option>
+          <option value="json">JSON</option>
+        </select>
+      </div>
+  
+      <div class="table-container">
+        <table class="netscape-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Include Subdomains</th>
+              <th>Path</th>
+              <th>Secure</th>
+              <th>Expiry</th>
+              <th>Name</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>    
+    </main>
+  </body>
+</html>

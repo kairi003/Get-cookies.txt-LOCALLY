@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@types/chrome": "^0.0.218",
+    "@types/wicg-file-system-access": "^2020.9.5",
+    "icon-gen": "^3.0.1"
+  }
+}
