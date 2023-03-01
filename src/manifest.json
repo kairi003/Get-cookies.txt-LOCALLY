@@ -1,7 +1,7 @@
 {
   "name": "Get cookies.txt LOCALLY",
   "description": "Get cookies.txt, NEVER send information outside.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest_version": 3,
   "permissions": [
     "activeTab", 

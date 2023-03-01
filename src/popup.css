@@ -63,7 +63,8 @@ main {
 
 .table-container {
   width: 100%;
-  overflow-x: scroll;
+  max-height: 380px;
+  overflow: scroll;
 }
 
 .netscape-table {
