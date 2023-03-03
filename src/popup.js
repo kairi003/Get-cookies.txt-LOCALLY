@@ -44,26 +44,26 @@ const FormatMap = {
 
 /**
  * Save text data as a file
- * @param {string} text 
- * @param {Format} format 
+ * @param {string} text
+ * @param {string} filename
+ * @param {Format} format
  */
-const save = async (text, { ext, mimeType }) => {
-  const { hostname } = new URL(await getUrl);
+const save = async (text, filename, { ext, mimeType }) => {
   const a = document.createElement('a');
   a.href = `data:${mimeType},${encodeURIComponent(text)}`;
-  a.download = `${hostname}_cookies${ext}`;
+  a.download = filename + ext;
   a.click();
 }
 
 /**
  * Save text data as a file with name
- * @param {string} text 
- * @param {Format} format 
+ * @param {string} text
+ * @param {string} filename
+ * @param {Format} format
  */
-const saveAs = async (text, { ext, mimeType }) => {
-  const { hostname } = new URL(await getUrl);
+const saveAs = async (text, filename, { ext, mimeType }) => {
   const opts = {
-    suggestedName: `${hostname}_cookies${ext}`,
+    suggestedName: filename + ext,
     types: [{
       description: 'Cookie file',
       accept: { [mimeType]: [ext] },
@@ -89,8 +89,8 @@ const setClipboard = async (text) => {
 
 /**
  * Serialize and retrieve Cookies data into text data in a specific format
- * @param {Format} format 
- * @param {chrome.cookies.GetAllDetails} details 
+ * @param {Format} format
+ * @param {chrome.cookies.GetAllDetails} details
  * @returns {string}
  */
 const getCookieText = async (format, details) => {
@@ -122,14 +122,16 @@ getUrl.then(url => chrome.cookies.getAll({ url })).then(cookies => {
 
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const text = await getCookieText(format, { url: await getUrl });
-  save(text, format);
+  const url = new URL(await getUrl);
+  const text = await getCookieText(format, { url: url.href });
+  save(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const text = await getCookieText(format, { url: await getUrl });
-  saveAs(text, format);
+  const url = new URL(await getUrl);
+  const text = await getCookieText(format, { url: url.href });
+  saveAs(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
@@ -141,6 +143,6 @@ document.querySelector('#copy').addEventListener('click', async () => {
 document.querySelector('#exportAll').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const text = await getCookieText(format, {});
-  save(text, format);
+  save(text, 'cookies', format);
 });
 
