@@ -13,7 +13,7 @@ const getUrl = chrome.tabs.query({ active: true, currentWindow: true })
 const jsonToNetscapeMapper = (jsonData) => {
   return jsonData.map(({ domain, expirationDate, path, secure, name, value }) => {
     const includeSubDomain = !!domain?.startsWith('.');
-    const expiry = expirationDate?.toFixed() ?? 0;
+    const expiry = expirationDate?.toFixed() ?? '0';
     const arr = [domain, includeSubDomain, path, secure, expiry, name, value];
     return arr.map(v => (typeof v === 'boolean') ? v.toString().toUpperCase() : v);
   });
@@ -86,7 +86,7 @@ const setClipboard = async (text) => {
   const data = [new ClipboardItem({ [type]: blob })];
   navigator.clipboard.write(data)
     .then(() => {
-      document.getElementById('copy').innerText = 'Copied to clipboard!';
+      document.getElementById('copy').innerText = 'Copied!';
     })
 }
 
@@ -105,7 +105,7 @@ const getCookieText = async (format, details) => {
 /** Set URL in the header */
 getUrl.then(url => {
   const location = document.querySelector('#location');
-  location.textContent = new URL(url).hostname;
+  location.textContent = location.href = new URL(url).href;
 });
 
 /** Set Cookies data to the table */
