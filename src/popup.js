@@ -84,7 +84,10 @@ const setClipboard = async (text) => {
   const type = 'text/plain';
   const blob = new Blob([text], { type });
   const data = [new ClipboardItem({ [type]: blob })];
-  navigator.clipboard.write(data);
+  navigator.clipboard.write(data)
+    .then(() => {
+      document.getElementById('copy').innerText = 'Copied to clipboard!';
+    })
 }
 
 /**
