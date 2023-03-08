@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "manifest_version": 3,
   "permissions": [
-    "activeTab", 
+    "activeTab",
     "cookies"
   ],
   "host_permissions": ["<all_urls>"],
@@ -22,5 +22,8 @@
     "32": "/images/icon32.png",
     "48": "/images/icon48.png",
     "128": "/images/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
   }
 }
