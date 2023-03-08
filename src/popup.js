@@ -105,7 +105,7 @@ const getCookieText = async (format, details) => {
 /** Set URL in the header */
 getUrl.then(url => {
   const location = document.querySelector('#location');
-  location.textContent = location.href = new URL(url).href;
+  location.textContent = new URL(url).hostname;
 });
 
 /** Set Cookies data to the table */
