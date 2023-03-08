@@ -13,7 +13,7 @@ const getUrl = chrome.tabs.query({ active: true, currentWindow: true })
 const jsonToNetscapeMapper = (jsonData) => {
   return jsonData.map(({ domain, expirationDate, path, secure, name, value }) => {
     const includeSubDomain = !!domain?.startsWith('.');
-    const expiry = expirationDate?.toFixed() ?? '';
+    const expiry = expirationDate?.toFixed() ?? 0;
     const arr = [domain, includeSubDomain, path, secure, expiry, name, value];
     return arr.map(v => (typeof v === 'boolean') ? v.toString().toUpperCase() : v);
   });

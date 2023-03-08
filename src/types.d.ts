@@ -5,7 +5,7 @@ type Format = {
 }
 type CookieJson = {
   "domain": string;
-  "expirationDate": ?number;
+  "expirationDate": number;
   "hostOnly": boolean;
   "httpOnly": boolean;
   "name": string;
