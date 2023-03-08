@@ -5,7 +5,8 @@
   "manifest_version": 3,
   "permissions": [
     "activeTab",
-    "cookies"
+    "cookies",
+    "notifications"
   ],
   "host_permissions": ["<all_urls>"],
   "action": {
