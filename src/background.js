@@ -5,8 +5,7 @@
  */
 const updateBadgeCounter = async () => {
   const [{ tabId, url } = {}] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!url) return;
-  const text = (await chrome.cookies.getAll({ url })).length.toFixed();
+  const text = url ? (await chrome.cookies.getAll({ url })).length.toFixed() : '';
   chrome.action.setBadgeText({ tabId, text });
 }
 
