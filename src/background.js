@@ -15,13 +15,13 @@ chrome.tabs.onActivated.addListener(updateBadgeCounter);
 
 
 // Update notification
-chrome.runtime.onInstalled.addListener(({ previouVersion, reason }) => {
+chrome.runtime.onInstalled.addListener(({ previousVersion, reason }) => {
   if (reason == 'update') {
     const currentVersion = chrome.runtime.getManifest().version;
     chrome.notifications.create('updated', {
       type: 'basic',
       title: 'Get cookies.txt LOCALLY',
-      message: `Updated from ${previouVersion} to ${currentVersion}`,
+      message: `Updated from ${previousVersion} to ${currentVersion}`,
       iconUrl: '/images/icon128.png',
       buttons: [
         { title: 'Github Releases' },
