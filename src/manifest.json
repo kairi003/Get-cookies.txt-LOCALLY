@@ -1,7 +1,7 @@
 {
   "name": "Get cookies.txt LOCALLY",
   "description": "Get cookies.txt, NEVER send information outside.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "manifest_version": 3,
   "permissions": [
     "activeTab",
@@ -24,6 +24,7 @@
     "48": "/images/icon48.png",
     "128": "/images/icon128.png"
   },
+  "incognito": "split",
   "background": {
     "service_worker": "background.js"
   }
