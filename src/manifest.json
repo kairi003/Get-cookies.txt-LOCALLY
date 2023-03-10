@@ -24,6 +24,7 @@
     "48": "/images/icon48.png",
     "128": "/images/icon128.png"
   },
+  "incognito": "split",
   "background": {
     "service_worker": "background.js"
   }
