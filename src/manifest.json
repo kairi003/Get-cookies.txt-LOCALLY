@@ -1,6 +1,6 @@
 {
   "name": "Get cookies.txt LOCALLY",
-  "description": "Get cookies.txt, NEVER send information outside.",
+  "description": "Get cookies.txt, NEVER send information outside with open-source",
   "version": "0.3.2",
   "manifest_version": 3,
   "permissions": [
