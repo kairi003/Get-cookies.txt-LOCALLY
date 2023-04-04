@@ -45,35 +45,14 @@ const FormatMap = {
 /**
  * Save text data as a file
  * @param {string} text
- * @param {string} filename
+ * @param {string} name
  * @param {Format} format
+ * @param {boolean} saveAs
  */
-const save = async (text, filename, { ext, mimeType }) => {
-  const a = document.createElement('a');
-  a.href = `data:${mimeType},${encodeURIComponent(text)}`;
-  a.download = filename + ext;
-  a.click();
-}
-
-/**
- * Save text data as a file with name
- * @param {string} text
- * @param {string} filename
- * @param {Format} format
- */
-const saveAs = async (text, filename, { ext, mimeType }) => {
-  const opts = {
-    suggestedName: filename + ext,
-    types: [{
-      description: 'Cookie file',
-      accept: { [mimeType]: [ext] },
-    }],
-  };
-  window.showSaveFilePicker(opts).then(async handle => {
-    const writable = await handle.createWritable();
-    await writable.write(text);
-    await writable.close();
-  });
+const save = async (text, name, { ext, mimeType }, saveAs=false) => {
+  const url = `data:${mimeType},${encodeURIComponent(text)}`;
+  const filename = name + ext;
+  await chrome.downloads.download({url, filename, saveAs});
 }
 
 /**
@@ -134,7 +113,7 @@ document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const url = new URL(await getUrl);
   const text = await getCookieText(format, { url: url.href });
-  saveAs(text, url.hostname + '_cookies', format);
+  save(text, url.hostname + '_cookies', format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
