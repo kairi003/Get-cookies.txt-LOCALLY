@@ -1,7 +1,12 @@
 html {
   width: 500px;
   box-sizing: border-box;
-  overflow-x: scroll;
+  font-family: sans-serif;
+}
+
+body {
+  margin: 8px;
+  width: 484px;
 }
 
 h1 {
