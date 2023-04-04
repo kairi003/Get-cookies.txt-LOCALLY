@@ -50,9 +50,9 @@ const FormatMap = {
  * @param {boolean} saveAs
  */
 const save = async (text, name, { ext, mimeType }, saveAs=false) => {
-  const content = `data:${mimeType},${encodeURIComponent(text)}`;
+  const url = `data:${mimeType},${encodeURIComponent(text)}`;
   const filename = name + ext;
-  chrome.downloads.download(content, {filename, saveAs});
+  await chrome.downloads.download({url, filename, saveAs});
 }
 
 /**
