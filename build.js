@@ -30,6 +30,7 @@ const build = async (name) => {
   archive.glob('**/*');
 
   await archive.finalize();
+  console.log('BUILD', zipPath);
 }
 
 
