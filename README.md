@@ -10,23 +10,6 @@ This extension never sends information outside.
 Its source code is open-source, very small, and not obfuscated, so it can be easily checked on GitHub or in the extension's installation directory.
 
 
-## Example of extension installation directory
-### Windows
-```
-%LOCALAPPDATA%\Google\Chrome\User Data\Default\Extensions\cclelndahbckbenkjhflpdbgdldlbecc
-```
-
-### Mac
-```
-~/Library/Application Support/Google/Chrome/Default/Extensions/cclelndahbckbenkjhflpdbgdldlbecc
-```
-
-### Linux
-```
-~/.config/google-chrome/Default/Extensions/cclelndahbckbenkjhflpdbgdldlbecc
-```
-
-
 # Installation
 ## From WebStore
 
@@ -50,3 +33,21 @@ Its source code is open-source, very small, and not obfuscated, so it can be eas
 2. Open Extensions(chrome://extensions/).
 3. Enable "Developer mode".
 4. Click on "Load Unpacked" and open the directory `Get-cookies.txt-LOCALLY/src`.
+
+
+
+## Example of extension installation directory (Google Chrome)
+### Windows
+```
+%LOCALAPPDATA%\Google\Chrome\User Data\Default\Extensions\cclelndahbckbenkjhflpdbgdldlbecc
+```
+
+### Mac
+```
+~/Library/Application Support/Google/Chrome/Default/Extensions/cclelndahbckbenkjhflpdbgdldlbecc
+```
+
+### Linux
+```
+~/.config/google-chrome/Default/Extensions/cclelndahbckbenkjhflpdbgdldlbecc
+```
