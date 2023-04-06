@@ -1,5 +1,7 @@
 # Privacy policy for "Get cookies.txt LOCALLY" developed by kairi
-This privacy policy outlines the policies that kairi (hereinafter referred to as "the developer") follows when handling personal information or information equivalent to personal information of users using "Get cookies.txt LOCALLY", a Google Chrome extension developed by the developer (hereinafter referred to as "the app").
+This privacy policy outlines the policies that kairi (hereinafter referred to as "the developer") follows when handling personal information or information equivalent to personal information of users using "Get cookies.txt LOCALLY", the browser extension developed by the developer (hereinafter referred to as "the app").
+Furthermore, while this application is primarily developed for Google Chrome, some features will function in environments that are compatible with WebExtensions API, such as Firefox. 
+In environments other than Google Chrome, please substitute the APIs in this policy with those that are compatible.
 
 ## Basic policy
 The developer recognizes the importance of personal information and believes that protecting personal information is a social responsibility.
@@ -43,4 +45,4 @@ For inquiries regarding this app or the handling of personal information, please
 Email: kairi.satellite@gmail.com
 
 ## Date of enactment
-Enacted on March 4, 2023
+Enacted on April 7, 2023
