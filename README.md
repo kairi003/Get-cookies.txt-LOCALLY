@@ -4,10 +4,19 @@ Get cookies.txt, NEVER send information outside.
 ![ss](./ss.png)
 
 This extension exports cookies.txt in Netscape or JSON format.
-Netscape cookies.txt supports wget, curl, MozillaCookieJar(Python3), etc.
+The Netscape cookies.txt format is compatible with wget, curl, MozillaCookieJar(Python3), and more.
 
-This extension never sends information outside.
-Its source code is open-source, very small, and not obfuscated, so it can be easily checked on GitHub or in the extension's installation directory.
+Rest assured that this extension never transmits your information externally.
+It features an open-source, unobfuscated source code that is readily available for inspection on GitHub or in the extension's installation directory.
+
+To function correctly, this extension requires certain permissions, all of which are listed in the source code for transparency.
+Specifically, it now needs "Download management" to execute a more appropriate file export method, which was previously achieved through "link generation and automatic clicking" in versions before v0.3.x.
+
+- **activeTab**: To get the URL of the current active tab.
+- **cookies**: To get and export cookies (not write or send).
+- **downloads**: Only used to export local resources (cookies).
+- **notifications**: To notify updates.
+- **hosts permissions**: To get and export cookies (not write or send).
 
 
 # Installation
