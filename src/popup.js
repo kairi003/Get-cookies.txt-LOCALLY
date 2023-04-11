@@ -50,9 +50,17 @@ const FormatMap = {
  * @param {boolean} saveAs
  */
 const save = async (text, name, { ext, mimeType }, saveAs=false) => {
-  const url = `data:${mimeType},${encodeURIComponent(text)}`;
+  const blob = new Blob([text], { 'type': mimeType });
   const filename = name + ext;
-  await chrome.downloads.download({url, filename, saveAs});
+  const url = URL.createObjectURL(blob);
+  const downloadId = await chrome.downloads.download({url, filename, saveAs});
+  chrome.downloads.onChanged.addListener(function (delta) {
+    const {id, state, error} = delta;
+    if (id === downloadId && (state?.current === 'complete' || error)) {
+      URL.revokeObjectURL(url);
+      chrome.downloads.onChanged.removeListener(this);
+    }
+  });
 }
 
 /**
@@ -60,13 +68,8 @@ const save = async (text, name, { ext, mimeType }, saveAs=false) => {
  * @param {string} text
  */
 const setClipboard = async (text) => {
-  const type = 'text/plain';
-  const blob = new Blob([text], { type });
-  const data = [new ClipboardItem({ [type]: blob })];
-  navigator.clipboard.write(data)
-    .then(() => {
-      document.getElementById('copy').innerText = 'Copied!';
-    })
+  await navigator.clipboard.writeText(text);
+  document.getElementById('copy').innerText = 'Copied!';
 }
 
 /**
