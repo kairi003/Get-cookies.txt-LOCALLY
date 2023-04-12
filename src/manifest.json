@@ -7,7 +7,8 @@
     "activeTab",
     "cookies",
     "downloads",
-    "notifications"
+    "notifications",
+    "clipboardWrite"
   ],
   "host_permissions": ["<all_urls>"],
   "action": {
