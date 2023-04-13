@@ -16,8 +16,10 @@ chrome.tabs.onActivated.addListener(updateBadgeCounter);
 
 // Update notification
 chrome.runtime.onInstalled.addListener(({ previousVersion, reason }) => {
-  if (reason == 'update') {
+  if (reason === 'update') {
     const currentVersion = chrome.runtime.getManifest().version;
+    // Notification is not necessary when there is no version update or while reloading
+    if ( previousVersion === currentVersion) return;
     chrome.notifications.create('updated', {
       type: 'basic',
       title: 'Get cookies.txt LOCALLY',
