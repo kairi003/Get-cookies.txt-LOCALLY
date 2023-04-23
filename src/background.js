@@ -1,7 +1,5 @@
 /**
  * Update icon badge counter on active page
- * @param {number} tabId 
- * @param {string | undefined} url 
  */
 const updateBadgeCounter = async () => {
   const [{ tabId, url } = {}] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -16,7 +14,7 @@ chrome.tabs.onActivated.addListener(updateBadgeCounter);
 
 // Update notification
 chrome.runtime.onInstalled.addListener(({ previousVersion, reason }) => {
-  if (reason == 'update') {
+  if (reason === 'update') {
     const currentVersion = chrome.runtime.getManifest().version;
     chrome.notifications.create('updated', {
       type: 'basic',

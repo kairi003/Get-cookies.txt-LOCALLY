@@ -31,7 +31,7 @@ Specifically, it now needs "Download management" to execute a more appropriate f
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/cclelndahbckbenkjhflpdbgdldlbecc.svg)][link-chrome]
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/users/cclelndahbckbenkjhflpdbgdldlbecc.svg)][link-chrome] \
 [![Mozilla Add-on](https://img.shields.io/amo/v/get-cookies-txt-locally.svg)][link-firefox]
-[![Mozilla Add-on](https://img.shields.io/chrome-web-store/users/get-cookies-txt-locally.svg)][link-firefox]
+[![Mozilla Add-on](https://img.shields.io/amo/users/get-cookies-txt-locally)][link-firefox]
 
 - Depending on the status of the review, it may not be the latest version or may not be published yet.
 - Some features may be limited in the Firefox version.
