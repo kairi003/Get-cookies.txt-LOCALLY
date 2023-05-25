@@ -54,15 +54,7 @@ const save = async (text, name, { ext, mimeType }, saveAs = false) => {
   const filename = name + ext;
   const url = URL.createObjectURL(blob);
   const downloadId = await chrome.downloads.download({ url, filename, saveAs });
-  /** @type {(downloadDelta: chrome.downloads.DownloadDelta) => void} */
-  const callback = delta => {
-    const { id, state, error } = delta;
-    if (id === downloadId && (state?.current === 'complete' || error)) {
-      URL.revokeObjectURL(url);
-      chrome.downloads.onChanged.removeListener(callback);
-    }
-  }
-  chrome.downloads.onChanged.addListener(callback);
+  URL.revokeObjectURL(url);
 }
 
 /**
