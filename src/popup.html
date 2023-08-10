@@ -1,61 +1,90 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="popup.css">
-    <link rel="stylesheet" href="iconfont/material-icons.css" />
-    <script src="popup.js" defer></script>
-  </head>
-  <body>
-    <header>
-      <h1>
-        Get cookies.txt for <a id="location"></a>
-      </h1>
-      <hr />
-    </header>
-    <main>
-      <div class="export-btn-container">
-        <button id="export" class="export-btn export">
-          Export          
-          <span class="material-symbols-outlined">download</span>
-        </button>
-        <button id="exportAs" class="export-btn export-as">
-          Export As
-          <span class="material-symbols-outlined">download</span>
-        </button>
-        <button id="copy" class="export-btn copy">
-          Copy
-          <span class="material-symbols-outlined">content_paste</span>
-        </button>
-        <button id="exportAll" class="export-btn large export-all">
-          Export All Cookies
-          <span class="material-symbols-outlined">download</span>
-        </button>
-      </div>
-  
-      <div class="format">
-        <label for="format">Export Format:</label>
-        <select id="format" name="format">
-          <option value="netscape" selected>Netscape</option>
-          <option value="json">JSON</option>
-        </select>
-      </div>
-  
-      <div class="table-container">
-        <table class="netscape-table">
-          <thead>
-            <tr>
-              <th>Domain</th>
-              <th>Include Subdomains</th>
-              <th>Path</th>
-              <th>Secure</th>
-              <th>Expiry</th>
-              <th>Name</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>    
-    </main>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="iconfont/material-icons.css">
+  <link rel="stylesheet" href="donation.css">
+  <script src="popup.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>
+      Get cookies.txt for <a id="location"></a>
+    </h1>
+    <hr />
+  </header>
+  <main>
+    <div class="export-btn-container">
+      <button id="export" class="export-btn export">
+        Export
+        <span class="material-symbols-outlined">download</span>
+      </button>
+      <button id="exportAs" class="export-btn export-as">
+        Export As
+        <span class="material-symbols-outlined">download</span>
+      </button>
+      <button id="copy" class="export-btn copy">
+        Copy
+        <span class="material-symbols-outlined">content_paste</span>
+      </button>
+      <button id="exportAll" class="export-btn large export-all">
+        Export All Cookies
+        <span class="material-symbols-outlined">download</span>
+      </button>
+    </div>
+
+    <div class="format">
+      <label for="format">Export Format:</label>
+      <select id="format" name="format">
+        <option value="netscape" selected>Netscape</option>
+        <option value="json">JSON</option>
+      </select>
+    </div>
+
+    <div class="donation">
+      <details>
+        <summary class>
+          Buy Me a Coffee ☕
+        </summary>
+        <div class="donation-description">
+          <p>Got a $2,000 offer to buy this extension, but I'm not going to sell it to spammers!</p>
+          <p>By the way, your cup of coffee pleases me 😎</p>
+        </div>
+        <ul class="payment-buttons-container">
+          <li>
+            <a class="payment-button" href="https://www.buymeacoffee.com/kairi003" target="_blank">
+              <img src="images/generic.svg" alt="Credit Card"> Credit Card
+            </a>
+          </li>
+          <li>
+            <a class="payment-button" href="https://paypal.me/kairi003" target="_blank">
+              <img src="images/paypal.svg" alt="PayPal"> PayPal
+            </a>
+          </li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="table-container">
+      <table class="netscape-table">
+        <thead>
+          <tr>
+            <th>Domain</th>
+            <th>Include Subdomains</th>
+            <th>Path</th>
+            <th>Secure</th>
+            <th>Expiry</th>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+</body>
+
 </html>
