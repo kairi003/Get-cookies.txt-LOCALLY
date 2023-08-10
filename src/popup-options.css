@@ -1,0 +1,17 @@
+.option-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 1em;
+}
+
+.option {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5em;
+}
+
+.netscape-table.nowrap {
+  white-space: nowrap;
+}
