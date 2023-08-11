@@ -4,9 +4,11 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="popup-options.css">
   <link rel="stylesheet" href="iconfont/material-icons.css">
   <link rel="stylesheet" href="donation.css">
   <script src="popup.js" defer></script>
+  <script src="table-nowrap.js" defer></script>
 </head>
 
 <body>
@@ -36,16 +38,23 @@
       </button>
     </div>
 
-    <div class="format">
-      <label for="format">Export Format:</label>
-      <select id="format" name="format">
-        <option value="netscape" selected>Netscape</option>
-        <option value="json">JSON</option>
-      </select>
+    <div id="optionsContainer" class="option-container">
+      <div class="format-option option">
+        <label for="format">Export Format:</label>
+        <select id="format" name="format">
+          <option value="netscape" selected>Netscape</option>
+          <option value="json">JSON</option>
+        </select>
+      </div>
+
+      <div class="nowrap-option option">
+        <label for="nowrapOption">Table Nowrap: </label>
+        <input type="checkbox" id="nowrapOption" name="nowrapOption" checked />
+      </div>
     </div>
 
     <div class="table-container">
-      <table class="netscape-table">
+      <table id="netscapeTable" class="netscape-table nowrap">
         <thead>
           <tr>
             <th>Domain</th>
