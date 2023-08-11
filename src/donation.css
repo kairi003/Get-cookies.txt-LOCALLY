@@ -42,8 +42,8 @@
   transition: filter 0.3s;
 }
 
-.donation .payment-buttons:hover {
-  filter: brightness(0.9);
+.donation .payment-button:hover {
+  filter: brightness(0.8);
 }
 
 .donation .payment-button img {
