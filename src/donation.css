@@ -1,0 +1,52 @@
+/* summary styles */
+.donation details summary {
+  width: fit-content;
+  outline: none;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.donation details summary:hover {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 255, 0.5);
+}
+
+/* donation description styles */
+.donation-description p {
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
+/* payment button container styles */
+.donation .payment-buttons-container {
+  display: flex;
+  gap: 10px;
+  padding: 0;
+  list-style-type: none;
+  justify-content: center;
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+/* payment button styles */
+.donation .payment-button {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #aaedad;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: filter 0.3s;
+}
+
+.donation .payment-button:hover {
+  filter: brightness(0.8);
+}
+
+.donation .payment-button img {
+  margin-right: 5px;
+  height: 20px;
+}
