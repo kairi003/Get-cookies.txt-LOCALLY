@@ -10,6 +10,7 @@ const updateBadgeCounter = async () => {
 chrome.cookies.onChanged.addListener(updateBadgeCounter);
 chrome.tabs.onUpdated.addListener(updateBadgeCounter);
 chrome.tabs.onActivated.addListener(updateBadgeCounter);
+chrome.windows.onFocusChanged.addListener(updateBadgeCounter);
 
 
 // Update notification
