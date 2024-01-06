@@ -31,7 +31,9 @@ const FormatMap = {
         '# http://curl.haxx.se/rfc/cookie_spec.html',
         '# This is a generated file!  Do not edit.',
         '',
-        ...netscapeTable.map(row => row.join('\t'))].join('\n')
+        ...netscapeTable.map(row => row.join('\t')),
+        '' // Add a new line at the end
+      ].join('\n');
       return nsText;
     }
   },
