@@ -1,7 +1,7 @@
 /** @typedef {import('./types.d.ts').*} * */
 
 /** Promise to get URL of Active Tab */
-const getUrl = chrome.tabs.query({ active: true, currentWindow: true })
+const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true })
   .then(([{ url }]) => url);
 
 
@@ -81,13 +81,13 @@ const getCookieText = async (format, details) => {
 
 
 /** Set URL in the header */
-getUrl.then(url => {
+getUrlPromise.then(url => {
   const location = document.querySelector('#location');
   location.textContent = location.href = new URL(url).href;
 });
 
 /** Set Cookies data to the table */
-getUrl.then(url => chrome.cookies.getAll({ url })).then(cookies => {
+getUrlPromise.then(url => chrome.cookies.getAll({ url })).then(cookies => {
   const netscape = jsonToNetscapeMapper(cookies);
   const tableRows = netscape.map(row => {
     const tr = document.createElement('tr');
@@ -103,21 +103,21 @@ getUrl.then(url => chrome.cookies.getAll({ url })).then(cookies => {
 
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrl);
+  const url = new URL(await getUrlPromise);
   const text = await getCookieText(format, { url: url.href });
   save(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrl);
+  const url = new URL(await getUrlPromise);
   const text = await getCookieText(format, { url: url.href });
   save(text, url.hostname + '_cookies', format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const text = await getCookieText(format, { url: await getUrl });
+  const text = await getCookieText(format, { url: await getUrlPromise });
   setClipboard(text);
 });
 
