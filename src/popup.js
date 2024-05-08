@@ -7,7 +7,7 @@ const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true })
 
 /**
  * Convert Chrome's JSON format cookies data to a string array for Netscape format
- * @param {CookieJson[]} jsonData 
+ * @param {CookieJson[]} jsonData
  * @returns {string[][7]}
  */
 const jsonToNetscapeMapper = (jsonData) => {
@@ -87,7 +87,7 @@ getUrlPromise.then(url => {
 });
 
 /** Set Cookies data to the table */
-getUrlPromise.then(url => chrome.cookies.getAll({ url })).then(cookies => {
+getUrlPromise.then(url => chrome.cookies.getAll({ url, partitionKey: { topLevelSite: url.origin }})).then(cookies => {
   const netscape = jsonToNetscapeMapper(cookies);
   const tableRows = netscape.map(row => {
     const tr = document.createElement('tr');
@@ -104,20 +104,21 @@ getUrlPromise.then(url => chrome.cookies.getAll({ url })).then(cookies => {
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href });
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
   save(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href });
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
   save(text, url.hostname + '_cookies', format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const text = await getCookieText(format, { url: await getUrlPromise });
+  const url = new URL(await getUrlPromise);
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
   setClipboard(text);
 });
 
