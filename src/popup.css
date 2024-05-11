@@ -18,7 +18,7 @@ h1 {
   text-align: center;
 }
 
-h1 > span#location {
+h1 > a#location {
   color: blue;
 }
 
