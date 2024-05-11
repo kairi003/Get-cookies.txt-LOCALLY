@@ -1,0 +1,23 @@
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #2a2a2a;
+    scrollbar-color: #aaa #333;
+    color: #dfdfdf;
+  }
+
+  h1 > a#location {
+    color: #e09200;
+  }
+
+  .table-container {
+    background-color: #1e1e1e;
+  }
+
+  .netscape-table th, td {
+    border: solid 1px #424242;
+  }
+
+  .netscape-table tbody tr:nth-of-type(2n+1) {
+    background-color: #2a2a2a;
+  }
+}

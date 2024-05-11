@@ -18,8 +18,8 @@ h1 {
   text-align: center;
 }
 
-h1 > span#location {
-  color: blue;
+h1 > a#location {
+  color: #3153ee;
 }
 
 main {
