@@ -2,28 +2,11 @@
   html {
     background-color: #2a2a2a;
     scrollbar-color: #aaa #333;
+    color: #FFFFFF;
   }
 
   h1 > a#location {
     color: #e09200;
-  }
-
-  .export-btn {
-    background-color: #333333;
-    color: #FFFFFF;
-  }
-
-  .export-btn.export {
-    background-color: #485FC7;
-  }
-
-  .export-btn.export-as {
-    background-color: #FEE08A;
-    color: black;
-  }
-
-  .export-btn.copy, .export-btn.export-all {
-    background-color: #3F8ECF;
   }
 
   .table-container {
