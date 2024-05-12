@@ -14,8 +14,18 @@ const getAllCookies = async (details) => {
  * Update icon badge counter on active page
  */
 const updateBadgeCounter = async () => {
-  const [{ tabId, url } = {}] = await chrome.tabs.query({ active: true, currentWindow: true });
-  const text = url ? (await getAllCookies({ url: url, partitionKey: { topLevelSite: url.origin }})).length.toFixed() : '';
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab) {
+    return;
+  }
+  const { id: tabId, url: urlString } = tab;
+  if (!urlString) {
+    chrome.action.setBadgeText({ tabId, text: '' });
+    return;
+  }
+  const url = new URL(urlString);
+  const cookies = await getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } });
+  const text = cookies.length.toFixed();
   chrome.action.setBadgeText({ tabId, text });
 }
 
