@@ -2,7 +2,7 @@
 
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true })
-  .then(([{ url }]) => url);
+  .then(([{ url }]) => new URL(url));
 
 
 /**
@@ -95,11 +95,13 @@ const getAllCookies = async (details) => {
 /** Set URL in the header */
 getUrlPromise.then(url => {
   const location = document.querySelector('#location');
-  location.textContent = location.href = new URL(url).href;
+  location.textContent = location.href = url.href;
 });
 
 /** Set Cookies data to the table */
-getUrlPromise.then(url => getAllCookies({ url, partitionKey: { topLevelSite: url.origin }})).then(cookies => {
+getUrlPromise
+  .then(url => getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
+  .then(cookies => {
   const netscape = jsonToNetscapeMapper(cookies);
   const tableRows = netscape.map(row => {
     const tr = document.createElement('tr');
@@ -115,22 +117,22 @@ getUrlPromise.then(url => getAllCookies({ url, partitionKey: { topLevelSite: url
 
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, {url: url.href, partitionKey: {topLevelSite: url.origin}});
+  const url = await getUrlPromise;
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin } });
   save(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, {url: url.href, partitionKey: {topLevelSite: url.origin}});
+  const url = await getUrlPromise;
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin } });
   save(text, url.hostname + '_cookies', format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, {url: url.href, partitionKey: {topLevelSite: url.origin}});
+  const url = await getUrlPromise;
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin } });
   setClipboard(text);
 });
 
