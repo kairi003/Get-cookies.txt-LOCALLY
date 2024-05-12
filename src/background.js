@@ -1,9 +1,21 @@
 /**
+ * Retrieves both cookies with and without a partition key and returns the merged list
+ * @param {chrome.cookies.GetAllDetails} details
+ * @returns {chrome.cookies.Cookie[]}
+ */
+const getAllCookies = async (details) => {
+  const { partitionKey, ...detailsWithoutPartitionKey } = details;
+  const cookiesWithPartitionKey = await chrome.cookies.getAll(details);
+  const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
+  return [...cookies, ...cookiesWithPartitionKey]
+}
+
+/**
  * Update icon badge counter on active page
  */
 const updateBadgeCounter = async () => {
   const [{ tabId, url } = {}] = await chrome.tabs.query({ active: true, currentWindow: true });
-  const text = url ? (await chrome.cookies.getAll({ url: url, partitionKey: { topLevelSite: url.origin }})).length.toFixed() : '';
+  const text = url ? (await getAllCookies({ url: url, partitionKey: { topLevelSite: url.origin }})).length.toFixed() : '';
   chrome.action.setBadgeText({ tabId, text });
 }
 

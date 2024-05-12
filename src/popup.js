@@ -75,8 +75,20 @@ const setClipboard = async (text) => {
  * @returns {string}
  */
 const getCookieText = async (format, details) => {
-  const cookies = await chrome.cookies.getAll(details);
+  const cookies = await getAllCookies(details)
   return format.serializer(cookies);
+}
+
+/**
+ * Retrieves both cookies with and without a partition key and returns the merged list
+ * @param {chrome.cookies.GetAllDetails} details
+ * @returns {chrome.cookies.Cookie[]}
+ */
+const getAllCookies = async (details) => {
+  const { partitionKey, ...detailsWithoutPartitionKey } = details;
+  const cookiesWithPartitionKey = await chrome.cookies.getAll(details);
+  const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
+  return [...cookies, ...cookiesWithPartitionKey]
 }
 
 
@@ -87,7 +99,7 @@ getUrlPromise.then(url => {
 });
 
 /** Set Cookies data to the table */
-getUrlPromise.then(url => chrome.cookies.getAll({ url, partitionKey: { topLevelSite: url.origin }})).then(cookies => {
+getUrlPromise.then(url => getAllCookies({ url, partitionKey: { topLevelSite: url.origin }})).then(cookies => {
   const netscape = jsonToNetscapeMapper(cookies);
   const tableRows = netscape.map(row => {
     const tr = document.createElement('tr');
@@ -104,21 +116,21 @@ getUrlPromise.then(url => chrome.cookies.getAll({ url, partitionKey: { topLevelS
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
+  const text = await getCookieText(format, {url: url.href, partitionKey: {topLevelSite: url.origin}});
   save(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
+  const text = await getCookieText(format, {url: url.href, partitionKey: {topLevelSite: url.origin}});
   save(text, url.hostname + '_cookies', format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
   const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
+  const text = await getCookieText(format, {url: url.href, partitionKey: {topLevelSite: url.origin}});
   setClipboard(text);
 });
 
