@@ -102,18 +102,18 @@ getUrlPromise.then(url => {
 getUrlPromise
   .then(url => getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
   .then(cookies => {
-  const netscape = jsonToNetscapeMapper(cookies);
-  const tableRows = netscape.map(row => {
-    const tr = document.createElement('tr');
-    tr.replaceChildren(...row.map(v => {
-      const td = document.createElement('td');
-      td.textContent = v;
-      return td;
-    }));
-    return tr;
+    const netscape = jsonToNetscapeMapper(cookies);
+    const tableRows = netscape.map(row => {
+      const tr = document.createElement('tr');
+      tr.replaceChildren(...row.map(v => {
+        const td = document.createElement('td');
+        td.textContent = v;
+        return td;
+      }));
+      return tr;
+    });
+    document.querySelector('table tbody').replaceChildren(...tableRows);
   });
-  document.querySelector('table tbody').replaceChildren(...tableRows);
-});
 
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
@@ -138,7 +138,7 @@ document.querySelector('#copy').addEventListener('click', async () => {
 
 document.querySelector('#exportAll').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const text = await getCookieText(format, {});
+  const text = await getCookieText(format, { partitionKey: {} });
   save(text, 'cookies', format);
 });
 
