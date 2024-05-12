@@ -75,7 +75,7 @@ const setClipboard = async (text) => {
  * @returns {string}
  */
 const getCookieText = async (format, details) => {
-  const cookies = await getAllCookies(details)
+  const cookies = await getAllCookies(details);
   return format.serializer(cookies);
 }
 
