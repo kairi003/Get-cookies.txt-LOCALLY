@@ -5,10 +5,20 @@
  */
 const getAllCookies = async (details) => {
   const { partitionKey, ...detailsWithoutPartitionKey } = details;
-  const cookiesWithPartitionKey = await chrome.cookies.getAll(details);
+  const cookiesWithPartitionKey = partitionKey ? await chrome.cookies.getAll(details) : [];
   const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
-  return [...cookies, ...cookiesWithPartitionKey]
+  return [...cookies, ...cookiesWithPartitionKey];
 }
+
+// Listen for messages from popup.js
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'requestAllCookies') {
+    const { details } = message;
+    getAllCookies(details).then(sendResponse);
+    return true;
+  }
+  return false;
+});
 
 /**
  * Update icon badge counter on active page

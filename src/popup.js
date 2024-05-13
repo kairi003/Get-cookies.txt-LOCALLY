@@ -55,8 +55,7 @@ const save = async (text, name, { ext, mimeType }, saveAs = false) => {
   const blob = new Blob([text], { 'type': mimeType });
   const filename = name + ext;
   const url = URL.createObjectURL(blob);
-  const downloadId = await chrome.downloads.download({ url, filename, saveAs });
-  URL.revokeObjectURL(url);
+  await chrome.downloads.download({ url, filename, saveAs }).finally(() =>  URL.revokeObjectURL(url));
 }
 
 /**
@@ -69,26 +68,23 @@ const setClipboard = async (text) => {
 }
 
 /**
+ * Retrieves both cookies with and without a partition key and returns the merged list
+ * @param {chrome.cookies.GetAllDetails} details
+ * @returns {Promise<chrome.cookies.Cookie[]>}
+ */
+const requestAllCookies = async (details) =>
+  chrome.runtime.sendMessage({ action: 'requestAllCookies', details });
+
+
+/**
  * Serialize and retrieve Cookies data into text data in a specific format
  * @param {Format} format
  * @param {chrome.cookies.GetAllDetails} details
  * @returns {string}
  */
 const getCookieText = async (format, details) => {
-  const cookies = await getAllCookies(details);
+  const cookies = await requestAllCookies(details);
   return format.serializer(cookies);
-}
-
-/**
- * Retrieves both cookies with and without a partition key and returns the merged list
- * @param {chrome.cookies.GetAllDetails} details
- * @returns {chrome.cookies.Cookie[]}
- */
-const getAllCookies = async (details) => {
-  const { partitionKey, ...detailsWithoutPartitionKey } = details;
-  const cookiesWithPartitionKey = await chrome.cookies.getAll(details);
-  const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
-  return [...cookies, ...cookiesWithPartitionKey]
 }
 
 
@@ -100,7 +96,7 @@ getUrlPromise.then(url => {
 
 /** Set Cookies data to the table */
 getUrlPromise
-  .then(url => getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
+  .then(url => requestAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
   .then(cookies => {
     const netscape = jsonToNetscapeMapper(cookies);
     const tableRows = netscape.map(row => {
