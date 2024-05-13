@@ -2,7 +2,7 @@
 
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true })
-  .then(([{ url }]) => url);
+  .then(([{ url }]) => new URL(url));
 
 
 /**
@@ -75,56 +75,70 @@ const setClipboard = async (text) => {
  * @returns {string}
  */
 const getCookieText = async (format, details) => {
-  const cookies = await chrome.cookies.getAll(details);
+  const cookies = await getAllCookies(details);
   return format.serializer(cookies);
+}
+
+/**
+ * Retrieves both cookies with and without a partition key and returns the merged list
+ * @param {chrome.cookies.GetAllDetails} details
+ * @returns {chrome.cookies.Cookie[]}
+ */
+const getAllCookies = async (details) => {
+  const { partitionKey, ...detailsWithoutPartitionKey } = details;
+  const cookiesWithPartitionKey = await chrome.cookies.getAll(details);
+  const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
+  return [...cookies, ...cookiesWithPartitionKey]
 }
 
 
 /** Set URL in the header */
 getUrlPromise.then(url => {
   const location = document.querySelector('#location');
-  location.textContent = location.href = new URL(url).href;
+  location.textContent = location.href = url.href;
 });
 
 /** Set Cookies data to the table */
-getUrlPromise.then(url => chrome.cookies.getAll({ url, partitionKey: { topLevelSite: url.origin }})).then(cookies => {
-  const netscape = jsonToNetscapeMapper(cookies);
-  const tableRows = netscape.map(row => {
-    const tr = document.createElement('tr');
-    tr.replaceChildren(...row.map(v => {
-      const td = document.createElement('td');
-      td.textContent = v;
-      return td;
-    }));
-    return tr;
+getUrlPromise
+  .then(url => getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
+  .then(cookies => {
+    const netscape = jsonToNetscapeMapper(cookies);
+    const tableRows = netscape.map(row => {
+      const tr = document.createElement('tr');
+      tr.replaceChildren(...row.map(v => {
+        const td = document.createElement('td');
+        td.textContent = v;
+        return td;
+      }));
+      return tr;
+    });
+    document.querySelector('table tbody').replaceChildren(...tableRows);
   });
-  document.querySelector('table tbody').replaceChildren(...tableRows);
-});
 
 document.querySelector('#export').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
+  const url = await getUrlPromise;
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin } });
   save(text, url.hostname + '_cookies', format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
+  const url = await getUrlPromise;
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin } });
   save(text, url.hostname + '_cookies', format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const url = new URL(await getUrlPromise);
-  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin }});
+  const url = await getUrlPromise;
+  const text = await getCookieText(format, { url: url.href, partitionKey: { topLevelSite: url.origin } });
   setClipboard(text);
 });
 
 document.querySelector('#exportAll').addEventListener('click', async () => {
   const format = FormatMap[document.querySelector('#format').value];
-  const text = await getCookieText(format, {});
+  const text = await getCookieText(format, { partitionKey: {} });
   save(text, 'cookies', format);
 });
 
