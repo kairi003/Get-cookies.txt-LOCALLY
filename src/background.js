@@ -8,7 +8,7 @@ const getAllCookies = async (details) => {
   const cookiesWithPartitionKey = partitionKey ? await chrome.cookies.getAll(details) : [];
   const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
   return [...cookies, ...cookiesWithPartitionKey];
-}
+};
 
 // Listen for messages from popup.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -37,13 +37,12 @@ const updateBadgeCounter = async () => {
   const cookies = await getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } });
   const text = cookies.length.toFixed();
   chrome.action.setBadgeText({ tabId, text });
-}
+};
 
 chrome.cookies.onChanged.addListener(updateBadgeCounter);
 chrome.tabs.onUpdated.addListener(updateBadgeCounter);
 chrome.tabs.onActivated.addListener(updateBadgeCounter);
 chrome.windows.onFocusChanged.addListener(updateBadgeCounter);
-
 
 // Update notification
 chrome.runtime.onInstalled.addListener(({ previousVersion, reason }) => {
@@ -54,9 +53,7 @@ chrome.runtime.onInstalled.addListener(({ previousVersion, reason }) => {
       title: 'Get cookies.txt LOCALLY',
       message: `Updated from ${previousVersion} to ${currentVersion}`,
       iconUrl: '/images/icon128.png',
-      buttons: [
-        { title: 'Github Releases' },
-        { title: 'Uninstall' }]
+      buttons: [{ title: 'Github Releases' }, { title: 'Uninstall' }]
     });
   }
 });
@@ -68,7 +65,7 @@ chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) =
     switch (buttonIndex) {
       case 0:
         chrome.tabs.create({
-          url: "https://github.com/kairi003/Get-cookies.txt-LOCALLY/releases"
+          url: 'https://github.com/kairi003/Get-cookies.txt-LOCALLY/releases'
         });
         break;
       case 1:

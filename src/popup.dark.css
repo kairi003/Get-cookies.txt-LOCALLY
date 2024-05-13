@@ -13,11 +13,12 @@
     background-color: #1e1e1e;
   }
 
-  .netscape-table th, td {
+  .netscape-table th,
+  td {
     border: solid 1px #424242;
   }
 
-  .netscape-table tbody tr:nth-of-type(2n+1) {
+  .netscape-table tbody tr:nth-of-type(2n + 1) {
     background-color: #2a2a2a;
   }
 }

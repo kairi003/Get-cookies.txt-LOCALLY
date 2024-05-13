@@ -3,9 +3,11 @@
     "@types/chrome": "^0.0.218",
     "@types/wicg-file-system-access": "^2020.9.5",
     "archiver": "^5.3.1",
-    "icon-gen": "^3.0.1"
+    "icon-gen": "^3.0.1",
+    "prettier": "^3.2.5"
   },
   "scripts": {
-    "build": "node build.js"
+    "format": "npx prettier --write src",
+    "build": "npx format && node build.js"
   }
 }
