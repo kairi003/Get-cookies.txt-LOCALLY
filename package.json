@@ -8,6 +8,6 @@
   },
   "scripts": {
     "format": "npx prettier --write src",
-    "build": "npx format && node build.js"
+    "build": "npm run format && node build.js"
   }
 }
