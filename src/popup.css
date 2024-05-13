@@ -57,17 +57,18 @@ main {
 }
 
 .export-btn.export {
-  background-color: #485FC7;
+  background-color: #485fc7;
   color: white;
 }
 
 .export-btn.export-as {
-  background-color: #FEE08A;
+  background-color: #fee08a;
   color: black;
 }
 
-.export-btn.copy, .export-btn.export-all {
-  background-color: #3F8ECF;
+.export-btn.copy,
+.export-btn.export-all {
+  background-color: #3f8ecf;
   color: white;
 }
 
@@ -81,10 +82,11 @@ main {
   border-collapse: collapse;
 }
 
-.netscape-table th, td {
+.netscape-table th,
+td {
   border: solid 1px black;
 }
 
-.netscape-table tbody tr:nth-of-type(2n+1) {
+.netscape-table tbody tr:nth-of-type(2n + 1) {
   background-color: aliceblue;
 }

@@ -3,12 +3,7 @@
   "description": "Get cookies.txt, NEVER send information outside with open-source",
   "version": "0.5.7",
   "manifest_version": 3,
-  "permissions": [
-    "activeTab",
-    "cookies",
-    "downloads",
-    "notifications"
-  ],
+  "permissions": ["activeTab", "cookies", "downloads", "notifications"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",

@@ -1,100 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="popup.dark.css" />
+    <link rel="stylesheet" href="popup-options.css" />
+    <link rel="stylesheet" href="iconfont/material-icons.css" />
+    <link rel="stylesheet" href="donation.css" />
+    <script src="popup.js" defer></script>
+    <script src="table-nowrap.js" defer></script>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="popup.css">
-  <link rel="stylesheet" href="popup.dark.css">
-  <link rel="stylesheet" href="popup-options.css">
-  <link rel="stylesheet" href="iconfont/material-icons.css">
-  <link rel="stylesheet" href="donation.css">
-  <script src="popup.js" defer></script>
-  <script src="table-nowrap.js" defer></script>
-</head>
-
-<body>
-  <header>
-    <h1>
-      Get cookies.txt for <a id="location"></a>
-    </h1>
-    <hr />
-  </header>
-  <main>
-    <div class="export-btn-container">
-      <button id="export" class="export-btn export">
-        Export
-        <span class="material-symbols-outlined">download</span>
-      </button>
-      <button id="exportAs" class="export-btn export-as">
-        Export As
-        <span class="material-symbols-outlined">download</span>
-      </button>
-      <button id="copy" class="export-btn copy">
-        Copy
-        <span class="material-symbols-outlined">content_paste</span>
-      </button>
-      <button id="exportAll" class="export-btn large export-all">
-        Export All Cookies
-        <span class="material-symbols-outlined">download</span>
-      </button>
-    </div>
-
-    <div id="optionsContainer" class="option-container">
-      <div class="format-option option">
-        <label for="format">Export Format:</label>
-        <select id="format" name="format">
-          <option value="netscape" selected>Netscape</option>
-          <option value="json">JSON</option>
-        </select>
+  <body>
+    <header>
+      <h1>Get cookies.txt for <a id="location"></a></h1>
+      <hr />
+    </header>
+    <main>
+      <div class="export-btn-container">
+        <button id="export" class="export-btn export">
+          Export
+          <span class="material-symbols-outlined">download</span>
+        </button>
+        <button id="exportAs" class="export-btn export-as">
+          Export As
+          <span class="material-symbols-outlined">download</span>
+        </button>
+        <button id="copy" class="export-btn copy">
+          Copy
+          <span class="material-symbols-outlined">content_paste</span>
+        </button>
+        <button id="exportAll" class="export-btn large export-all">
+          Export All Cookies
+          <span class="material-symbols-outlined">download</span>
+        </button>
       </div>
 
-      <div class="nowrap-option option">
-        <label for="nowrapOption">Table Nowrap: </label>
-        <input type="checkbox" id="nowrapOption" name="nowrapOption" checked />
-      </div>
-    </div>
-
-    <div class="table-container">
-      <table id="netscapeTable" class="netscape-table nowrap">
-        <thead>
-          <tr>
-            <th>Domain</th>
-            <th>Include Subdomains</th>
-            <th>Path</th>
-            <th>Secure</th>
-            <th>Expiry</th>
-            <th>Name</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-    <div class="donation">
-      <details>
-        <summary class>
-          Buy Developer a Coffee ☕
-        </summary>
-        <div class="donation-description">
-          <p>Got many offers to buy this extension, but I'm never going to sell it to spammers!</p>
-          <p>By the way, a cup of coffee would make my day 😎</p>
+      <div id="optionsContainer" class="option-container">
+        <div class="format-option option">
+          <label for="format">Export Format:</label>
+          <select id="format" name="format">
+            <option value="netscape" selected>Netscape</option>
+            <option value="json">JSON</option>
+          </select>
         </div>
-        <ul class="payment-buttons-container">
-          <li>
-            <a class="payment-button" href="https://www.buymeacoffee.com/kairi003" target="_blank">
-              <img src="images/generic.svg" alt="Credit Card"> Credit Card
-            </a>
-          </li>
-          <li>
-            <a class="payment-button" href="https://paypal.me/kairi003" target="_blank">
-              <img src="images/paypal.svg" alt="PayPal"> PayPal
-            </a>
-          </li>
-        </ul>
-      </details>
-    </div>
-  </main>
-</body>
 
+        <div class="nowrap-option option">
+          <label for="nowrapOption">Table Nowrap: </label>
+          <input type="checkbox" id="nowrapOption" name="nowrapOption" checked />
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table id="netscapeTable" class="netscape-table nowrap">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Include Subdomains</th>
+              <th>Path</th>
+              <th>Secure</th>
+              <th>Expiry</th>
+              <th>Name</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="donation">
+        <details>
+          <summary class>Buy Developer a Coffee ☕</summary>
+          <div class="donation-description">
+            <p>Got many offers to buy this extension, but I'm never going to sell it to spammers!</p>
+            <p>By the way, a cup of coffee would make my day 😎</p>
+          </div>
+          <ul class="payment-buttons-container">
+            <li>
+              <a class="payment-button" href="https://www.buymeacoffee.com/kairi003" target="_blank">
+                <img src="images/generic.svg" alt="Credit Card" /> Credit Card
+              </a>
+            </li>
+            <li>
+              <a class="payment-button" href="https://paypal.me/kairi003" target="_blank">
+                <img src="images/paypal.svg" alt="PayPal" /> PayPal
+              </a>
+            </li>
+          </ul>
+        </details>
+      </div>
+    </main>
+  </body>
 </html>
