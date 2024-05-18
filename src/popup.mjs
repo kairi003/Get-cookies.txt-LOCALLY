@@ -4,7 +4,6 @@ import { jsonToNetscapeMapper, formatMap } from './modules/cookie_format.mjs';
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true }).then(([{ url }]) => new URL(url));
 
-
 // ----------------------------------------------
 // Actions after resolving the promise
 // ----------------------------------------------
@@ -63,7 +62,6 @@ document.querySelector('#exportAll').addEventListener('click', async () => {
   const { text, format } = await getCookieText({ partitionKey: {} });
   saveToFile(text, 'cookies', format);
 });
-
 
 // ----------------------------------------------
 // Functions
