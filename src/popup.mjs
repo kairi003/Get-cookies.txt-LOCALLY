@@ -1,4 +1,6 @@
-/** @typedef {import('./types.d.ts').*} * */
+import getAllCookies from './modules/get_all_cookies.mjs';
+
+/** @typedef {import('./types').*} * */
 
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true }).then(([{ url }]) => new URL(url));
@@ -79,7 +81,7 @@ const requestAllCookies = async (details) => chrome.runtime.sendMessage({ action
  * @returns {string}
  */
 const getCookieText = async (format, details) => {
-  const cookies = await requestAllCookies(details);
+  const cookies = await getAllCookies(details);
   return format.serializer(cookies);
 };
 
@@ -91,7 +93,7 @@ getUrlPromise.then((url) => {
 
 /** Set Cookies data to the table */
 getUrlPromise
-  .then((url) => requestAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
+  .then((url) => getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
   .then((cookies) => {
     const netscape = jsonToNetscapeMapper(cookies);
     const tableRows = netscape.map((row) => {
