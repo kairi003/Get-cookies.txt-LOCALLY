@@ -1,24 +1,4 @@
-/**
- * Retrieves both cookies with and without a partition key and returns the merged list
- * @param {chrome.cookies.GetAllDetails} details
- * @returns {chrome.cookies.Cookie[]}
- */
-const getAllCookies = async (details) => {
-  const { partitionKey, ...detailsWithoutPartitionKey } = details;
-  const cookiesWithPartitionKey = partitionKey ? await chrome.cookies.getAll(details) : [];
-  const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
-  return [...cookies, ...cookiesWithPartitionKey];
-};
-
-// Listen for messages from popup.js
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === 'requestAllCookies') {
-    const { details } = message;
-    getAllCookies(details).then(sendResponse);
-    return true;
-  }
-  return false;
-});
+import getAllCookies from './modules/get_all_cookies.mjs';
 
 /**
  * Update icon badge counter on active page
