@@ -1,5 +1,5 @@
 import getAllCookies from './modules/get_all_cookies.mjs';
-import { jsonToNetscapeMapper, FormatMap } from './modules/cookie_formatter.mjs';
+import { jsonToNetscapeMapper, formatMap } from './modules/cookie_format.mjs';
 
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true }).then(([{ url }]) => new URL(url));
@@ -76,7 +76,7 @@ document.querySelector('#exportAll').addEventListener('click', async () => {
  */
 const getCookieText = async (details) => {
   const cookies = await getAllCookies(details);
-  const format = FormatMap[document.querySelector('#format').value];
+  const format = formatMap[document.querySelector('#format').value];
   if (!format) throw new Error('Invalid format');
   const text = format.serializer(cookies);
   return { text, format };

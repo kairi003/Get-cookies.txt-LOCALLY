@@ -13,7 +13,7 @@ export const jsonToNetscapeMapper = (cookies) => {
 };
 
 /** @type {Record<string, Format>} */
-export const FormatMap = {
+export const formatMap = {
   netscape: {
     ext: '.txt',
     mimeType: 'text/plain',
