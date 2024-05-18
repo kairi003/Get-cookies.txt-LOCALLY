@@ -18,7 +18,7 @@ const getBranch = () => new Promise((resolve, reject) => {
 
 const build = async (name) => {
   const dt = new Date().toLocaleString('sv').replace(/\D/g, '');
-  const zipPath = `${name}_${dt}.zip`;
+  const zipPath = `${name.replace('/', '_')}_${dt}.zip`;
   const output = fs.createWriteStream(path.join(__dirname, zipPath));
 
   process.chdir(path.join(__dirname, 'src'));
