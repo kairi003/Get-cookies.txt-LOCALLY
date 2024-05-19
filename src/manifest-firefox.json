@@ -1,0 +1,11 @@
+{
+  "incognito": "spanning",
+  "background": {
+    "page": "background.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{ac87cfd8-47b1-4401-b32e-f033af5ed96b}"
+    }
+  }
+}
