@@ -82,6 +82,7 @@ const getCookieText = async (details) => {
 
 /**
  * Save text data as a file
+ * Firefox fails if revoked during download.
  * @param {string} text
  * @param {string} name
  * @param {Format} format
@@ -91,7 +92,17 @@ const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
   const blob = new Blob([text], { type: mimeType });
   const filename = name + ext;
   const url = URL.createObjectURL(blob);
-  await chrome.downloads.download({ url, filename, saveAs }).finally(() => URL.revokeObjectURL(url));
+  const id = await chrome.downloads.download({ url, filename, saveAs });
+
+  /** @param {chrome.downloads.DownloadDelta} delta  */
+  const onChange = (delta) => {
+    if (delta.id === id && delta.state?.current !== 'in_progress') {
+      chrome.downloads.onChanged.removeListener(onChange);
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  chrome.downloads.onChanged.addListener(onChange);
 };
 
 /**
