@@ -47,7 +47,7 @@ Specifically, it now needs "Download management" to execute a more appropriate f
 1. Download and unzip this repository.
 2. Merge `src/manifest.json` and `src/manifest-firefox.json` using one of the following methods:
    - `npm install && npm run build:firfox` and install generated `.zip` file.
-   - `jq -s '.[0] + .[1]' src/manifest.json src/manifest.firefox.json > src/manifest.json` and install the extension from the `src` rectory.
+   - `jq -s '.[0] + .[1]' src/manifest.json src/manifest-firefox.json > src/manifest.json` and install the extension from the `src` rectory.
    - Merge manually.
 
 
