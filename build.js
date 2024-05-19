@@ -17,8 +17,9 @@ const getGitInfo = () => {
 
 const build = async ({ branch, commitHash }) => {
   const mode = options.firefox ? 'firefox' : 'chrome';
-  const zipPath = `${branch.replace('/', '_')}_${commitHash.slice(0,5)}_${mode}.zip`;
-  const output = fs.createWriteStream(path.join(__dirname, zipPath));
+  const zipName = `${branch.replace('/', '_')}_${commitHash.slice(0,5)}_${mode}.zip`;
+  fs.mkdirSync(path.join(__dirname, 'dst'), { recursive: true });
+  const output = fs.createWriteStream(path.join(__dirname, 'dst', zipName));
 
   process.chdir(path.join(__dirname, 'src'));
 
@@ -36,8 +37,8 @@ const build = async ({ branch, commitHash }) => {
   }
   archive.append(JSON.stringify(manifest, null, 2), { name: 'manifest.json' });
 
-  await archive.finalize();
-  console.log('BUILD', zipPath);
+  archive.finalize();
+  console.log('BUILD', zipName);
 };
 
 build(getGitInfo());
