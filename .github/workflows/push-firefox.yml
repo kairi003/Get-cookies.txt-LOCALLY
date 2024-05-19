@@ -1,0 +1,28 @@
+name: Push firefox version
+
+on:
+  push:
+    branches:
+      - firefox
+  workflow_dispatch:
+
+jobs:
+  merge-manifests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Merge manifest files
+      run: |
+        jq -s '.[0] + .[1]' src/manifest.json src/manifest.firefox.json > /tmp/manifest.json
+        mv /tmp/manifest.json src/manifest.json
+
+    - name: Commit and push if needed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add src/manifest.json
+        git commit -m "Update manifest.json for Firefox" || echo "No changes to commit"
+        git push origin HEAD:firefox --force
