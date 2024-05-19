@@ -43,6 +43,13 @@ Specifically, it now needs "Download management" to execute a more appropriate f
 3. Enable "Developer mode".
 4. Click on "Load Unpacked" and open the directory `Get-cookies.txt-LOCALLY/src`.
 
+## Build for Firefox
+1. Download and unzip this repository.
+2. Merge `src/manifest.json` and `src/manifest-firefox.json` using one of the following methods:
+   - `npm install && npm run build:firfox` and install generated `.zip` file from the `dist` directory.
+   - `jq -s '.[0] + .[1]' src/manifest.json src/manifest-firefox.json > src/manifest.json` and install the extension from the `src` rectory.
+   - Merge manually.
+
 
 
 ## Example of extension installation directory (Google Chrome)
