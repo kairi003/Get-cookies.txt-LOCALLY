@@ -1,25 +1,25 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const process = require('process');
 const path = require('path');
 const archiver = require('archiver');
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
+const { program } = require('commander');
 
+const options = program.option('-f --firefox', 'Build for Firefox').parse(process.argv).opts();
 
-const getBranch = () => new Promise((resolve, reject) => {
-  exec('git rev-parse --abbrev-ref HEAD', (err, stdout, stderr) => {
-    if (typeof stdout === 'string') {
-      resolve(stdout.trim());
-    } else {
-      reject(TypeError);
-    }
-  });
-});
+const getGitInfo = () => {
+  const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+  const commitHash = execSync('git rev-parse HEAD').toString().trim();
+  return { branch, commitHash };
+};
 
-
-const build = async (name) => {
-  const dt = new Date().toLocaleString('sv').replace(/\D/g, '');
-  const zipPath = `${name.replace('/', '_')}_${dt}.zip`;
-  const output = fs.createWriteStream(path.join(__dirname, zipPath));
+const build = async ({ branch, commitHash }) => {
+  const mode = options.firefox ? 'firefox' : 'chrome';
+  const zipName = `${branch.replace('/', '_')}_${commitHash.slice(0,5)}_${mode}.zip`;
+  fs.mkdirSync(path.join(__dirname, 'dst'), { recursive: true });
+  const output = fs.createWriteStream(path.join(__dirname, 'dst', zipName));
 
   process.chdir(path.join(__dirname, 'src'));
 
@@ -28,11 +28,17 @@ const build = async (name) => {
   });
 
   archive.pipe(output);
-  archive.glob('**/*');
+  archive.glob('**/*', { ignore: ['**/*.json'] });
 
-  await archive.finalize();
-  console.log('BUILD', zipPath);
-}
+  const manifest = JSON.parse(fs.readFileSync('manifest.json'));
+  if (options.firefox) {
+    const manifestFirefox = JSON.parse(fs.readFileSync('manifest-firefox.json'));
+    Object.assign(manifest, manifestFirefox);
+  }
+  archive.append(JSON.stringify(manifest, null, 2), { name: 'manifest.json' });
 
+  archive.finalize();
+  console.log('BUILD', zipName);
+};
 
-getBranch().then(build);
+build(getGitInfo());

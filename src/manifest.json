@@ -1,7 +1,7 @@
 {
   "name": "Get cookies.txt LOCALLY",
   "description": "Get cookies.txt, NEVER send information outside with open-source",
-  "version": "0.5.7",
+  "version": "0.6.2",
   "manifest_version": 3,
   "permissions": ["activeTab", "cookies", "downloads", "notifications"],
   "host_permissions": ["<all_urls>"],
@@ -22,6 +22,7 @@
   },
   "incognito": "split",
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.mjs",
+    "type": "module"
   }
 }
