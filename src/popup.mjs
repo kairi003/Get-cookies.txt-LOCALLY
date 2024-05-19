@@ -87,7 +87,7 @@ const getCookieText = async (details) => {
  * @param {Format} format
  * @param {boolean} saveAs
  */
-export const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
+const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
   const blob = new Blob([text], { type: mimeType });
   const filename = name + ext;
   const url = URL.createObjectURL(blob);
@@ -98,7 +98,7 @@ export const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) 
  * Copy text data to the clipboard
  * @param {string} text
  */
-export const setClipboard = async (text) => {
+const setClipboard = async (text) => {
   await navigator.clipboard.writeText(text);
   document.getElementById('copy').innerText = 'Copied!';
 };
