@@ -19,8 +19,8 @@ Specifically, it now needs "Download management" to execute a more appropriate f
 - **hosts permissions**: To get and export cookies (not write or send).
 
 
-# Installation
-## From WebStore
+## Installation
+### From WebStore
 
 [link-chrome]: https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc 'Chrome Web Store'
 [link-firefox]: https://addons.mozilla.org/firefox/addon/get-cookies-txt-locally/ 'Firefox Addons'
@@ -37,19 +37,16 @@ Specifically, it now needs "Download management" to execute a more appropriate f
 - Some features may be limited in the Firefox version.
 - You may need to allow access to site resources from the extension manager.
 
-## From source code (Google Chrome)
+### From source code (Google Chrome)
 1. Download and unzip this repository.
 2. Open Extensions(chrome://extensions/).
 3. Enable "Developer mode".
 4. Click on "Load Unpacked" and open the directory `Get-cookies.txt-LOCALLY/src`.
 
-## Build for Firefox
-1. Download and unzip this repository.
-2. Merge `src/manifest.json` and `src/manifest-firefox.json` using one of the following methods:
-   - `npm install && npm run build:firfox` and install generated `.zip` file from the `dist` directory.
-   - `jq -s '.[0] + .[1]' src/manifest.json src/manifest-firefox.json > src/manifest.json` and install the extension from the `src` rectory.
-   - Merge manually.
-
+### From source code (Firefox)
+For Firefox, you need to patch the manifest file by merging `src/manifest.json` and `src/manifest-firefox.json`. One of the following methods can be taken.
+- Use `firefox` branch: the workflow has merged manifest on `master`.
+- Use other branches: you need to merge by `npm run build:firefox`, `jq` or manually.
 
 
 ## Example of extension installation directory (Google Chrome)
