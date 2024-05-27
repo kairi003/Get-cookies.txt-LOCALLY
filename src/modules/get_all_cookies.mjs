@@ -6,7 +6,10 @@
 export default async function getAllCookies(details) {
   details.storeId ??= await getCurrentCookieStoreId();
   const { partitionKey, ...detailsWithoutPartitionKey } = details;
-  const cookiesWithPartitionKey = partitionKey ? await chrome.cookies.getAll(details) : [];
+  // Error handling for browsers that do not support partitionKey, such as chrome < 119.
+  // `chrome.cookies.getAll()` returns Promise but cannot directly catch() chain.
+  const cookiesWithPartitionKey = partitionKey ?
+    await Promise.resolve().then(() => chrome.cookies.getAll(details)).catch(() => []) : [];
   const cookies = await chrome.cookies.getAll(detailsWithoutPartitionKey);
   return [...cookies, ...cookiesWithPartitionKey];
 }
