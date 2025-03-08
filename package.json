@@ -1,11 +1,11 @@
 {
   "devDependencies": {
-    "@types/chrome": "^0.0.218",
-    "@types/wicg-file-system-access": "^2020.9.5",
-    "archiver": "^5.3.1",
+    "@types/chrome": "^0.0.308",
+    "@types/wicg-file-system-access": "^2020.9.8",
+    "archiver": "^5.3.2",
     "commander": "^12.1.0",
     "icon-gen": "^3.0.1",
-    "prettier": "^3.2.5"
+    "prettier": "^3.5.3"
   },
   "scripts": {
     "format": "npx prettier --write src",

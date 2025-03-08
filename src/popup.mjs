@@ -113,3 +113,15 @@ document.querySelector('#exportAll').addEventListener('click', async () => {
   const { text, format } = await getCookieText({ partitionKey: {} });
   saveToFile(text, 'cookies', format);
 });
+
+/** Set last used format value */
+const formatSelect = document.querySelector('#format');
+
+const selectedFormat = localStorage.getItem('selectedFormat');
+if (selectedFormat) {
+  formatSelect.value = selectedFormat;
+}
+
+formatSelect.addEventListener('change', () => {
+  localStorage.setItem('selectedFormat', formatSelect.value);
+});
