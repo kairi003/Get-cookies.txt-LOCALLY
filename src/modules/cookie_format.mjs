@@ -34,5 +34,12 @@ export const formatMap = {
     ext: '.json',
     mimeType: 'application/json',
     serializer: JSON.stringify
+  },
+  header: {
+    ext: '.txt',
+    mimeType: 'text/plain',
+    serializer: (cookies) => {
+      return cookies.map(({ name, value }) => `${name}=${value};`).join(' ');
+    }
   }
 };

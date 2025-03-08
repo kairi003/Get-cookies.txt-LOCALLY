@@ -18,8 +18,8 @@ const getGitInfo = () => {
 const build = async ({ branch, commitHash }) => {
   const mode = options.firefox ? 'firefox' : 'chrome';
   const zipName = `${branch.replace('/', '_')}_${commitHash.slice(0,5)}_${mode}.zip`;
-  fs.mkdirSync(path.join(__dirname, 'dst'), { recursive: true });
-  const output = fs.createWriteStream(path.join(__dirname, 'dst', zipName));
+  fs.mkdirSync(path.join(__dirname, 'dist'), { recursive: true });
+  const output = fs.createWriteStream(path.join(__dirname, 'dist', zipName));
 
   process.chdir(path.join(__dirname, 'src'));
 
