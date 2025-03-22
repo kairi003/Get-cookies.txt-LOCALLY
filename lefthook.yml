@@ -1,0 +1,12 @@
+pre-commit:
+  commands:
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css,html,md}"
+      run: npx biome check --fix --no-errors-on-unmatched --files-ignore-unknown=true "{staged_files}"
+      stage_fixed: true
+
+pre-push:
+  commands:
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css,html,md}"
+      run: npx biome check --no-errors-on-unmatched --files-ignore-unknown=true "{push_files}"
