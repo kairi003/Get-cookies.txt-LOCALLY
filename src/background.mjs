@@ -14,7 +14,10 @@ const updateBadgeCounter = async () => {
     return;
   }
   const url = new URL(urlString);
-  const cookies = await getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } });
+  const cookies = await getAllCookies({
+    url: url.href,
+    partitionKey: { topLevelSite: url.origin },
+  });
   const text = cookies.length.toFixed();
   chrome.action.setBadgeText({ tabId, text });
 };
@@ -33,24 +36,26 @@ chrome.runtime.onInstalled.addListener(({ previousVersion, reason }) => {
       title: 'Get cookies.txt LOCALLY',
       message: `Updated from ${previousVersion} to ${currentVersion}`,
       iconUrl: '/images/icon128.png',
-      buttons: [{ title: 'Github Releases' }, { title: 'Uninstall' }]
+      buttons: [{ title: 'Github Releases' }, { title: 'Uninstall' }],
     });
   }
 });
 
 // Update notification's button handler
-chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
-  console.log(notificationId, buttonIndex);
-  if (notificationId === 'updated') {
-    switch (buttonIndex) {
-      case 0:
-        chrome.tabs.create({
-          url: 'https://github.com/kairi003/Get-cookies.txt-LOCALLY/releases'
-        });
-        break;
-      case 1:
-        chrome.management.uninstallSelf({ showConfirmDialog: true });
-        break;
+chrome.notifications.onButtonClicked.addListener(
+  (notificationId, buttonIndex) => {
+    console.log(notificationId, buttonIndex);
+    if (notificationId === 'updated') {
+      switch (buttonIndex) {
+        case 0:
+          chrome.tabs.create({
+            url: 'https://github.com/kairi003/Get-cookies.txt-LOCALLY/releases',
+          });
+          break;
+        case 1:
+          chrome.management.uninstallSelf({ showConfirmDialog: true });
+          break;
+      }
     }
-  }
-});
+  },
+);
