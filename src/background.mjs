@@ -1,4 +1,5 @@
 import getAllCookies from './modules/get_all_cookies.mjs';
+import saveToFile from './modules/save_to_file.mjs';
 
 /**
  * Update icon badge counter on active page
@@ -59,3 +60,13 @@ chrome.notifications.onButtonClicked.addListener(
     }
   },
 );
+
+// Save file message listener
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  if (message.action === 'save') {
+    const { text, name, format, saveAs } = message.content;
+    await saveToFile(text, name, format, saveAs);
+    sendResponse('done');
+    return;
+  }
+});
