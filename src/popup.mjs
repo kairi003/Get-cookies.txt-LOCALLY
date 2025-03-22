@@ -1,8 +1,10 @@
+import { formatMap, jsonToNetscapeMapper } from './modules/cookie_format.mjs';
 import getAllCookies from './modules/get_all_cookies.mjs';
-import { jsonToNetscapeMapper, formatMap } from './modules/cookie_format.mjs';
 
 /** Promise to get URL of Active Tab */
-const getUrlPromise = chrome.tabs.query({ active: true, currentWindow: true }).then(([{ url }]) => new URL(url));
+const getUrlPromise = chrome.tabs
+  .query({ active: true, currentWindow: true })
+  .then(([{ url }]) => new URL(url));
 
 // ----------------------------------------------
 // Functions
@@ -67,7 +69,12 @@ getUrlPromise.then((url) => {
 
 /** Set Cookies data to the table */
 getUrlPromise
-  .then((url) => getAllCookies({ url: url.href, partitionKey: { topLevelSite: url.origin } }))
+  .then((url) =>
+    getAllCookies({
+      url: url.href,
+      partitionKey: { topLevelSite: url.origin },
+    }),
+  )
   .then((cookies) => {
     const netscape = jsonToNetscapeMapper(cookies);
     const tableRows = netscape.map((row) => {
@@ -77,7 +84,7 @@ getUrlPromise
           const td = document.createElement('td');
           td.textContent = v;
           return td;
-        })
+        }),
       );
       return tr;
     });
@@ -92,14 +99,14 @@ document.querySelector('#export').addEventListener('click', async () => {
   const url = await getUrlPromise;
   const details = { url: url.href, partitionKey: { topLevelSite: url.origin } };
   const { text, format } = await getCookieText(details);
-  saveToFile(text, url.hostname + '_cookies', format);
+  saveToFile(text, `${url.hostname}_cookies`, format);
 });
 
 document.querySelector('#exportAs').addEventListener('click', async () => {
   const url = await getUrlPromise;
   const details = { url: url.href, partitionKey: { topLevelSite: url.origin } };
   const { text, format } = await getCookieText(details);
-  saveToFile(text, url.hostname + '_cookies', format, true);
+  saveToFile(text, `${url.hostname}_cookies`, format, true);
 });
 
 document.querySelector('#copy').addEventListener('click', async () => {
