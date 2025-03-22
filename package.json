@@ -1,16 +1,20 @@
 {
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/chrome": "^0.0.308",
     "@types/wicg-file-system-access": "^2020.9.8",
     "archiver": "^5.3.2",
     "commander": "^12.1.0",
-    "icon-gen": "^3.0.1",
+    "icon-gen": "^5.0.0",
     "prettier": "^3.5.3"
   },
   "scripts": {
     "format": "npx prettier --write src",
     "build": "npm run build:chrome && npm run build:firefox",
     "build:chrome": "node build.js",
-    "build:firefox": "node build.js --firefox"
+    "build:firefox": "node build.js --firefox",
+    "check": "biome check",
+    "fix": "biome check --fix",
+    "fix:unsafe": "biome check --fix --unsafe"
   }
 }
