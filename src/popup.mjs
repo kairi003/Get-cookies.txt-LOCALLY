@@ -1,5 +1,6 @@
 import { formatMap, jsonToNetscapeMapper } from './modules/cookie_format.mjs';
 import getAllCookies from './modules/get_all_cookies.mjs';
+import _saveToFile from './modules/save_to_file.mjs';
 
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs
@@ -23,6 +24,7 @@ const getCookieText = async (details) => {
   return { text, format };
 };
 
+// TODO: use offscreen API to integrate implementation in chrome and firefox
 /**
  * Save text data as a file
  * Firefox cannot use saveAs in a popup, so the background script handles it.
@@ -33,10 +35,17 @@ const getCookieText = async (details) => {
  */
 const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
   const format = { ext, mimeType };
-  return chrome.runtime.sendMessage({
-    action: 'save',
-    content: { text, name, format, saveAs },
-  });
+  const isFirefox =
+    chrome.runtime.getManifest().browser_specific_settings !== undefined;
+  if (isFirefox) {
+    await chrome.runtime.sendMessage({
+      type: 'save',
+      target: 'background',
+      data: { text, name, format, saveAs },
+    });
+  } else {
+    await _saveToFile(text, name, format, saveAs);
+  }
 };
 
 /**
