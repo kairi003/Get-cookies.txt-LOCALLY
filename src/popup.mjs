@@ -1,5 +1,6 @@
 import { formatMap, jsonToNetscapeMapper } from './modules/cookie_format.mjs';
 import getAllCookies from './modules/get_all_cookies.mjs';
+import * as ClickToCopy from './modules/table-click-to-copy.mjs';
 
 /** Promise to get URL of Active Tab */
 const getUrlPromise = chrome.tabs
@@ -48,15 +49,6 @@ const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
   chrome.downloads.onChanged.addListener(onChange);
 };
 
-/**
- * Copy text data to the clipboard
- * @param {string} text
- */
-const setClipboard = async (text) => {
-  await navigator.clipboard.writeText(text);
-  document.getElementById('copy').innerText = 'Copied!';
-};
-
 // ----------------------------------------------
 // Actions after resolving the promise
 // ----------------------------------------------
@@ -67,7 +59,13 @@ getUrlPromise.then((url) => {
   location.textContent = location.href = url.href;
 });
 
-/** Set Cookies data to the table */
+/** Get browser storage */
+const defaultOptions = {
+  [ClickToCopy.checkboxId]: false,
+}
+const storage = await chrome.storage.sync.get(defaultOptions);
+
+/** Set Cookies data to the table; enable Click to Copy (if applicable) */
 getUrlPromise
   .then((url) =>
     getAllCookies({
@@ -89,6 +87,14 @@ getUrlPromise
       return tr;
     });
     document.querySelector('table tbody').replaceChildren(...tableRows);
+
+    const clickToCopyCheckbox = document.getElementById(ClickToCopy.checkboxId);
+    if (storage[ClickToCopy.checkboxId]) {
+      clickToCopyCheckbox.checked = true;
+      ClickToCopy.styleSheet.disabled = false;
+      ClickToCopy.addTableCellsEventListeners();
+    }
+    clickToCopyCheckbox.disabled = false;
   });
 
 // ----------------------------------------------
@@ -113,7 +119,7 @@ document.querySelector('#copy').addEventListener('click', async () => {
   const url = await getUrlPromise;
   const details = { url: url.href, partitionKey: { topLevelSite: url.origin } };
   const { text } = await getCookieText(details);
-  setClipboard(text);
+  ClickToCopy.setClipboard(text);
 });
 
 document.querySelector('#exportAll').addEventListener('click', async () => {

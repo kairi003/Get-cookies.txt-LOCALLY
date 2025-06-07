@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="popup-options.css" />
     <link rel="stylesheet" href="iconfont/material-icons.css" />
     <link rel="stylesheet" href="donation.css" />
+    <link rel="stylesheet" id="clickToCopyStyleSheet" href="popup-options-click-to-copy.css" />
     <script src="popup.mjs" type="module" defer></script>
     <script src="table-nowrap.js" defer></script>
   </head>
@@ -49,6 +50,11 @@
         <div class="nowrap-option option">
           <label for="nowrapOption">Table Nowrap: </label>
           <input type="checkbox" id="nowrapOption" name="nowrapOption" checked />
+        </div>
+
+        <div class="click-to-copy-option option">
+          <label for="clickToCopyOption">Click to Copy:</label>
+          <input type="checkbox" id="clickToCopyOption" name="clickToCopyOption" disabled />
         </div>
       </div>
 

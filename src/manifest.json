@@ -1,9 +1,9 @@
 {
   "name": "Get cookies.txt LOCALLY",
   "description": "Get cookies.txt, NEVER send information outside with open-source",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "manifest_version": 3,
-  "permissions": ["activeTab", "cookies", "downloads", "notifications"],
+  "permissions": ["activeTab", "cookies", "downloads", "notifications", "storage"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",

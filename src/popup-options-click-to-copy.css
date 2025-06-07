@@ -1,0 +1,5 @@
+#netscapeTable > tbody > tr > td:hover {
+    opacity: 50%;
+    cursor: pointer;
+    user-select: none;
+}
