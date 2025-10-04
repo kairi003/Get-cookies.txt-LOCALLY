@@ -70,6 +70,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     const { text, name, format, saveAs } = data || {};
     await saveToFile(text, name, format, saveAs);
     sendResponse('done');
-    return;
+    return true;
   }
+  return true;
 });
