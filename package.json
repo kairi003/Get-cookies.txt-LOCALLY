@@ -12,8 +12,8 @@
   "scripts": {
     "format": "npx prettier --write src",
     "build": "npm run build:chrome && npm run build:firefox",
-    "build:chrome": "node build.js",
-    "build:firefox": "node build.js --firefox",
+    "build:chrome": "node scripts/build.js",
+    "build:firefox": "node scripts/build.js --firefox",
     "check": "biome check",
     "fix": "biome check --fix",
     "fix:unsafe": "biome check --fix --unsafe"
