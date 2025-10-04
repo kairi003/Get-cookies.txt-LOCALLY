@@ -3,7 +3,13 @@
   "description": "Get cookies.txt, NEVER send information outside with open-source",
   "version": "0.7.1",
   "manifest_version": 3,
-  "permissions": ["activeTab", "cookies", "downloads", "notifications"],
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "downloads",
+    "notifications",
+    "offscreen"
+  ],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",
@@ -22,6 +28,7 @@
   },
   "incognito": "split",
   "background": {
+    "page": "background.html",
     "service_worker": "background.mjs",
     "type": "module"
   }

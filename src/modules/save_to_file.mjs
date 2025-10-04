@@ -1,7 +1,25 @@
 /**
+ * Create offscreen document
+ */
+async function createOffscreenDocument() {
+  const offscreenUrl = chrome.runtime.getURL('offscreen.html');
+  await chrome.offscreen.createDocument({
+    url: offscreenUrl,
+    reasons: ['BLOBS'],
+    justification: 'Create object URLs for file downloads',
+  });
+}
+
+/**
+ * Close offscreen document
+ */
+async function closeOffscreenDocument() {
+  await chrome.offscreen.closeDocument();
+}
+
+/**
  * Save text data as a file
- * Firefox fails if revoked during download.
- * Firefox cannot use saveAs in a popup, so the background script handles it.
+ * Creates and destroys offscreen document for each operation
  * @param {string} text
  * @param {string} name
  * @param {Format} format
@@ -13,18 +31,18 @@ export default async function saveToFile(
   { ext, mimeType },
   saveAs = false,
 ) {
-  const blob = new Blob([text], { type: mimeType });
+  // Create offscreen document
+  await createOffscreenDocument();
   const filename = name + ext;
-  const url = URL.createObjectURL(blob);
-  const id = await chrome.downloads.download({ url, filename, saveAs });
-
-  /** @param {chrome.downloads.DownloadDelta} delta  */
-  const onChange = (delta) => {
-    if (delta.id === id && delta.state?.current !== 'in_progress') {
-      chrome.downloads.onChanged.removeListener(onChange);
-      URL.revokeObjectURL(url);
-    }
-  };
-
-  chrome.downloads.onChanged.addListener(onChange);
+  try {
+    // Create object URL using offscreen document
+    const { url } = await chrome.runtime.sendMessage({
+      type: 'createObjectURL',
+      data: { text, mimeType },
+    });
+    await chrome.downloads.download({ url, filename, saveAs });
+  } finally {
+    // Close offscreen document for cleanup
+    await closeOffscreenDocument();
+  }
 }
