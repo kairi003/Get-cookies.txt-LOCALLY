@@ -15,23 +15,24 @@ const options = program
 const getGitInfo = () => {
   const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
   const commitHash = execSync('git rev-parse HEAD').toString().trim();
-  return { branch, commitHash };
+  const root = execSync('git rev-parse --show-toplevel').toString().trim();
+  return { branch, commitHash, root };
 };
 
-const build = async ({ branch, commitHash }) => {
+const build = async ({ branch, commitHash, root }) => {
   const mode = options.firefox ? 'firefox' : 'chrome';
   const zipName = `${branch.replace('/', '_')}_${commitHash.slice(0, 5)}_${mode}.zip`;
-  fs.mkdirSync(path.join(__dirname, 'dist'), { recursive: true });
-  const output = fs.createWriteStream(path.join(__dirname, 'dist', zipName));
+  fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
+  const output = fs.createWriteStream(path.join(root, 'dist', zipName));
 
-  process.chdir(path.join(__dirname, 'src'));
+  process.chdir(path.join(root, 'src'));
 
   const archive = archiver('zip', {
     zlib: { level: 9 },
   });
 
   archive.pipe(output);
-  archive.glob('**/*', { ignore: ['**/*.json'] });
+  archive.glob('**/*', { ignore: ['manifest*.json'] });
 
   const manifest = JSON.parse(fs.readFileSync('manifest.json'));
   if (options.firefox) {

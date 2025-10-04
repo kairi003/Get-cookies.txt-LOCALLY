@@ -1,4 +1,5 @@
 import getAllCookies from './modules/get_all_cookies.mjs';
+import saveToFile from './modules/save_to_file.mjs';
 
 /**
  * Update icon badge counter on active page
@@ -59,3 +60,17 @@ chrome.notifications.onButtonClicked.addListener(
     }
   },
 );
+
+// TODO: use offscreen API to integrate implementation in chrome and firefox
+// Save file message listener for firefox
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  const { type, target, data } = message || {};
+  if (target !== 'background') return;
+  if (type === 'save') {
+    const { text, name, format, saveAs } = data || {};
+    await saveToFile(text, name, format, saveAs);
+    sendResponse('done');
+    return true;
+  }
+  return true;
+});
