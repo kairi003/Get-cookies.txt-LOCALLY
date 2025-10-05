@@ -68,7 +68,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (type === 'save') {
     // Save to file
     const { text, name, format, saveAs } = data || {};
-    saveToFile(text, name, format, saveAs).then(() => sendResponse('done'));
+    saveToFile(text, name, format, saveAs)
+      .then(() => sendResponse('done'))
+      .catch((error) => sendResponse({ error: error?.message || String(error) }));
     return true;
   }
   return false;
