@@ -21,4 +21,10 @@
   .netscape-table tbody tr:nth-of-type(2n + 1) {
     background-color: #2a2a2a;
   }
+
+  select {
+    background-color: #3a3a3a;
+    color: #dfdfdf;
+    border: solid 1px #555;
+  }
 }
