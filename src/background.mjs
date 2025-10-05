@@ -61,16 +61,15 @@ chrome.notifications.onButtonClicked.addListener(
   },
 );
 
-// TODO: use offscreen API to integrate implementation in chrome and firefox
-// Save file message listener for firefox
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+// Background message handler
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { type, target, data } = message || {};
   if (target !== 'background') return;
   if (type === 'save') {
+    // Save to file
     const { text, name, format, saveAs } = data || {};
-    await saveToFile(text, name, format, saveAs);
-    sendResponse('done');
+    saveToFile(text, name, format, saveAs).then(() => sendResponse('done'));
     return true;
   }
-  return true;
+  return false;
 });

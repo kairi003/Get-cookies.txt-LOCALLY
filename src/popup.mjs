@@ -24,10 +24,8 @@ const getCookieText = async (details) => {
   return { text, format };
 };
 
-// TODO: use offscreen API to integrate implementation in chrome and firefox
 /**
  * Save text data as a file
- * Firefox cannot use saveAs in a popup, so the background script handles it.
  * @param {string} text
  * @param {string} name
  * @param {Format} format
@@ -35,17 +33,11 @@ const getCookieText = async (details) => {
  */
 const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
   const format = { ext, mimeType };
-  const isFirefox =
-    chrome.runtime.getManifest().browser_specific_settings !== undefined;
-  if (isFirefox) {
-    await chrome.runtime.sendMessage({
-      type: 'save',
-      target: 'background',
-      data: { text, name, format, saveAs },
-    });
-  } else {
-    await _saveToFile(text, name, format, saveAs);
-  }
+  await chrome.runtime.sendMessage({
+    type: 'save',
+    target: 'background',
+    data: { text, name, format, saveAs },
+  });
 };
 
 /**
