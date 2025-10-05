@@ -1,5 +1,5 @@
 import getAllCookies from './modules/get_all_cookies.mjs';
-import saveToFile from './modules/save_to_file.mjs';
+import { saveToFile, saveToFileWithBlob } from './modules/save_to_file.mjs';
 
 /**
  * Update icon badge counter on active page
@@ -67,10 +67,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (target !== 'background') return;
   if (type === 'save') {
     // Save to file
+    const isFirefox =
+      chrome.runtime.getManifest().browser_specific_settings !== undefined;
     const { text, name, format, saveAs } = data || {};
-    saveToFile(text, name, format, saveAs)
+    (isFirefox
+      ? saveToFileWithBlob(text, name, format, saveAs)
+      : saveToFile(text, name, format, saveAs)
+    )
       .then(() => sendResponse('done'))
-      .catch((error) => sendResponse({ error: error?.message || String(error) }));
+      .catch((error) =>
+        sendResponse({ error: error?.message || String(error) }),
+      );
     return true;
   }
   return false;
