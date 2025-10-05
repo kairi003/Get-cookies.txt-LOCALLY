@@ -1,8 +1,14 @@
 pre-commit:
   commands:
-    check:
+    fix:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css,html,md}"
       run: npx biome check --fix --no-errors-on-unmatched --files-ignore-unknown=true "{staged_files}"
+      stage_fixed: true
+    sync-version:
+      glob:
+        - "package.json"
+        - "src/manifest.json"
+      run: npm run sync-version
       stage_fixed: true
 
 pre-push:
@@ -10,3 +16,8 @@ pre-push:
     check:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css,html,md}"
       run: npx biome check --no-errors-on-unmatched --files-ignore-unknown=true "{push_files}"
+    check-version:
+      glob:
+        - "package.json"
+        - "src/manifest.json"
+      run: npm run check-version

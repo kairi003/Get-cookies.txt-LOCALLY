@@ -1,4 +1,5 @@
 {
+  "version": "0.7.2",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/chrome": "^0.0.308",
@@ -14,8 +15,10 @@
     "build": "npm run build:chrome && npm run build:firefox",
     "build:chrome": "node scripts/build.js",
     "build:firefox": "node scripts/build.js --firefox",
-    "check": "biome check",
-    "fix": "biome check --fix",
-    "fix:unsafe": "biome check --fix --unsafe"
+    "check": "biome check && npm run check-version",
+    "fix": "biome check --fix && npm run sync-version",
+    "fix:unsafe": "biome check --fix --unsafe && npm run sync-version",
+    "check-version": "node scripts/check-version.js",
+    "sync-version": "node scripts/check-version.js --fix"
   }
 }
