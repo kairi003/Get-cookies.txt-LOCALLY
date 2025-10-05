@@ -20,7 +20,7 @@ export const jsonToNetscapeMapper = (cookies) => {
 export const formatMap = {
   netscape: {
     ext: '.txt',
-    mimeType: 'text/plain',
+    mimeType: 'text/plain;charset=UTF-8',
     serializer: (cookies) => {
       const netscapeTable = jsonToNetscapeMapper(cookies);
       const text = [
@@ -36,12 +36,12 @@ export const formatMap = {
   },
   json: {
     ext: '.json',
-    mimeType: 'application/json',
+    mimeType: 'application/json;charset=UTF-8',
     serializer: JSON.stringify,
   },
   header: {
     ext: '.txt',
-    mimeType: 'text/plain',
+    mimeType: 'text/plain;charset=UTF-8',
     serializer: (cookies) => {
       return cookies.map(({ name, value }) => `${name}=${value};`).join(' ');
     },

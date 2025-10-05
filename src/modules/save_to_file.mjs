@@ -13,6 +13,6 @@ export default async function saveToFile(
   saveAs = false,
 ) {
   const filename = name + ext;
-  const url = `data://${mimeType};base64,${btoa(text)}`;
+  const url = `data://${mimeType},${encodeURIComponent(text)}`;
   return chrome.downloads.download({ url, filename, saveAs });
 }
