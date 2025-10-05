@@ -75,14 +75,14 @@ main {
 }
 
 .export-btn.copy {
-  & {
-    .default-copy-text {
-      display: flex;
-    }
-    .copied-text {
-      display: none;
-    }
+  /* default text */
+  .default-copy-text {
+    display: flex;
   }
+  .copied-text {
+    display: none;
+  }
+  /* when copied */
   &.copied {
     .default-copy-text {
       display: none;
