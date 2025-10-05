@@ -39,10 +39,11 @@
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: filter 0.3s;
+}
 
-  &:hover {
-    filter: brightness(0.8);
-  }
+/* payment button hover effect */
+.donation .payment-button:hover {
+  filter: brightness(0.8);
 }
 
 .donation .payment-button img {

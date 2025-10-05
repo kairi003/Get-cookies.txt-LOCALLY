@@ -75,22 +75,23 @@ main {
   color: white;
 }
 
+/* default text */
 .export-btn.copy {
-  /* default text */
   .default-copy-text {
     display: flex;
   }
   .copied-text {
     display: none;
   }
-  /* when copied */
-  &.copied {
-    .default-copy-text {
-      display: none;
-    }
-    .copied-text {
-      display: flex;
-    }
+}
+
+/* when copied */
+.export-btn.copy.copied {
+  .default-copy-text {
+    display: none;
+  }
+  .copied-text {
+    display: flex;
   }
 }
 
