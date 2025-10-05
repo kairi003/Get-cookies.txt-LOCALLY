@@ -25,8 +25,8 @@ export const formatMap = {
       const netscapeTable = jsonToNetscapeMapper(cookies);
       const text = [
         '# Netscape HTTP Cookie File',
-        '# http://curl.haxx.se/rfc/cookie_spec.html',
-        '# This is a generated file!  Do not edit.',
+        '# https://curl.haxx.se/rfc/cookie_spec.html',
+        '# This is a generated file! Do not edit.',
         '',
         ...netscapeTable.map((row) => row.join('\t')),
         '', // Add a new line at the end
