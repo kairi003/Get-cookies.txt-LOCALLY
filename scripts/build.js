@@ -7,6 +7,8 @@ const archiver = require('archiver');
 const { execSync } = require('node:child_process');
 const { program } = require('commander');
 
+const root = path.join(__dirname, '..');
+
 const options = program
   .option('-f --firefox', 'Build for Firefox')
   .parse(process.argv)
@@ -15,11 +17,10 @@ const options = program
 const getGitInfo = () => {
   const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
   const commitHash = execSync('git rev-parse HEAD').toString().trim();
-  const root = execSync('git rev-parse --show-toplevel').toString().trim();
-  return { branch, commitHash, root };
+  return { branch, commitHash };
 };
 
-const build = async ({ branch, commitHash, root }) => {
+const build = async ({ branch, commitHash }) => {
   const mode = options.firefox ? 'firefox' : 'chrome';
   const zipName = `${branch.replace('/', '_')}_${commitHash.slice(0, 5)}_${mode}.zip`;
   fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
