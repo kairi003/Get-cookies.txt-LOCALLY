@@ -54,7 +54,11 @@ const saveToFile = async (text, name, { ext, mimeType }, saveAs = false) => {
  */
 const setClipboard = async (text) => {
   await navigator.clipboard.writeText(text);
-  document.getElementById('copy').innerText = 'Copied!';
+  const copyButton = document.getElementById('copy');
+  copyButton.classList.add('copied');
+  setTimeout(() => {
+    copyButton.classList.remove('copied');
+  }, 2000);
 };
 
 // ----------------------------------------------
