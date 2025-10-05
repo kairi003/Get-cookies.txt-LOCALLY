@@ -7,7 +7,7 @@ const PACKAGE_PATH = path.resolve(ROOT, 'package.json');
 const MANIFEST_PATH = path.resolve(ROOT, 'src', 'manifest.json');
 
 const options = program
-  .option('-f --fix', 'Fix version mismatch by updating manifest.json')
+  .option('--fix', 'Fix version mismatch by updating manifest.json')
   .parse(process.argv)
   .opts();
 

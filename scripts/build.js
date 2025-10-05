@@ -7,26 +7,22 @@ const archiver = require('archiver');
 const { execSync } = require('node:child_process');
 const { program } = require('commander');
 
-const root = path.join(__dirname, '..');
+const ROOT = path.join(__dirname, '..');
 
 const options = program
   .option('-f --firefox', 'Build for Firefox')
   .parse(process.argv)
   .opts();
 
-const getGitInfo = () => {
-  const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-  const commitHash = execSync('git rev-parse HEAD').toString().trim();
-  return { branch, commitHash };
-};
+const getGitVersion = () => execSync('git describe --tags').toString().trim();
 
-const build = async ({ branch, commitHash }) => {
+const build = async (version) => {
   const mode = options.firefox ? 'firefox' : 'chrome';
-  const zipName = `${branch.replace('/', '_')}_${commitHash.slice(0, 5)}_${mode}.zip`;
-  fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
-  const output = fs.createWriteStream(path.join(root, 'dist', zipName));
+  const zipName = `get-cookies.txt-locally_${version}_${mode}.zip`;
+  fs.mkdirSync(path.join(ROOT, 'dist'), { recursive: true });
+  const output = fs.createWriteStream(path.join(ROOT, 'dist', zipName));
 
-  process.chdir(path.join(root, 'src'));
+  process.chdir(path.join(ROOT, 'src'));
 
   const archive = archiver('zip', {
     zlib: { level: 9 },
@@ -48,4 +44,4 @@ const build = async ({ branch, commitHash }) => {
   console.log('BUILD', zipName);
 };
 
-build(getGitInfo());
+build(getGitVersion());
