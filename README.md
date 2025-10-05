@@ -64,3 +64,9 @@ For Firefox, you need to patch the manifest file by merging `src/manifest.json` 
 ```
 ~/.config/google-chrome/Default/Extensions/cclelndahbckbenkjhflpdbgdldlbecc
 ```
+
+## References
+- [Netscape HTTP Cookie File Format](https://curl.se/docs/http-cookies.html)
+- [Chrome Extension Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/)
+- [Buy Me A Coffee | Brand Kit](https://buymeacoffee.com/brand)
+- [PayPal | Image Gallery](https://newsroom.jp.paypal-corp.com/logos)
